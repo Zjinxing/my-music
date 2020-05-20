@@ -17,7 +17,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "dev": "export NODE_ENV=dev && concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "cross-env NODE_ENV=dev concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

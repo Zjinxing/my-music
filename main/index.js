@@ -8,7 +8,7 @@ const URL =
   process.env.NODE_ENV === 'dev'
     ? 'http://localhost:3000'
     : `file://${path.join(__dirname, '../build/index.html')}`;
-
+console.log(process.env.NODE_ENV, '<<<<<<,');
 function createWindow() {
   win = new BrowserWindow({
     width: 1008,
