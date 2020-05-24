@@ -43,10 +43,10 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=dev concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
+    "eject": "rescripts eject",
     "postinstall": "electron-builder install-app-deps",
     "preelectron:build": "yarn build",
     "electron:build": "electron-builder -mw"
@@ -67,10 +67,15 @@
     ]
   },
   "devDependencies": {
+    "@rescripts/cli": "^0.0.14",
+    "@rescripts/rescript-env": "^0.0.12",
     "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
     "electron": "^8.3.0",
     "electron-builder": "^22.6.1",
     "wait-on": "^5.0.0"
-  }
+  },
+  "rescripts": [
+    "env"
+  ]
 }
