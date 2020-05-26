@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import { GET_RECOMMEND } from './request/recommand'
-import Aside from './Components/Aside'
-import Container from './Components/Container'
+import Aside from 'components/Aside'
+import Container from 'components/Container'
 
 function App() {
   useEffect(() => {
