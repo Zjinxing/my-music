@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import './App.css'
+import './App.scss'
 import { GET_RECOMMEND } from './request/recommand'
 import Aside from 'components/Aside'
 import Container from 'components/Container'
