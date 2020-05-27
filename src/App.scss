@@ -1,5 +1,8 @@
+@import './common/style/variable.scss';
+
 .App {
   display: grid;
   grid-template-columns: 220px auto;
   height: 100vh;
+  color: color(textColor);
 }

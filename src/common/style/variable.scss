@@ -1,0 +1,18 @@
+:root {
+  --color-textColor: #000;
+  --color-primary: #34ca97;
+  --color-bg: #f6f6f6;
+  --color-sideBg: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-textColor: #fff;
+    --color-bg: #1e1e1f;
+    --color-sideBg: #171718;
+  }
+}
+
+@function color($color-name) {
+  @return var(--color-#{$color-name});
+}
