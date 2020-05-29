@@ -5,4 +5,9 @@
   grid-template-columns: 220px auto;
   height: 100vh;
   color: color(textColor);
+  .drag {
+    height: 75px;
+    border-bottom: 1px dashed #f09;
+    -webkit-app-region: drag;
+  }
 }
