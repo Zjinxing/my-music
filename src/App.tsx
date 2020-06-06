@@ -3,6 +3,7 @@ import './App.scss'
 import { GET_RECOMMEND } from './request/recommand'
 import Aside from 'components/Aside'
 import Container from 'components/Container'
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
 
 function App() {
   useEffect(() => {
@@ -14,8 +15,12 @@ function App() {
 
   return (
     <div className="App">
-      <Aside></Aside>
-      <Container></Container>
+      <Router>
+        <Aside></Aside>
+        <Switch>
+          <Container></Container>
+        </Switch>
+      </Router>
     </div>
   )
 }

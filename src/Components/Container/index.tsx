@@ -1,7 +1,11 @@
 import React from 'react'
-import './index.scss'
+import { Route } from 'react-router-dom'
 import { useStore } from 'store'
-import { useObserver, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
+import Music from './Music'
+import './index.scss'
+import Video from './Video'
+import Radio from './Radio'
 
 const Container: React.FC = observer(() => {
   const store = useStore()
@@ -9,15 +13,9 @@ const Container: React.FC = observer(() => {
   return (
     <div className="container">
       <div className="container-header drag">可拖拽区域</div>
-      <span>现在的播放状态是：{store.isPlaying ? '正在播放' : '已暂停'}</span>
-      {String(store.isPlaying)}
-      <button
-        onClick={() => {
-          store.isPlaying = !store.isPlaying
-        }}
-      >
-        播放控制
-      </button>
+      <Route path="/" exact component={Music}></Route>
+      <Route path="/video" component={Video}></Route>
+      <Route path="/radio" component={Radio}></Route>
     </div>
   )
 })

@@ -1,14 +1,27 @@
 import React from 'react'
-import { useStore } from 'store'
 import { useObserver } from 'mobx-react'
+import { NavLink } from 'react-router-dom'
 import './index.scss'
 
 const Aside: React.FC = () => {
-  const store = useStore()
   return useObserver(() => (
     <div className="aside">
       <div className="aside-header drag">可拖拽区域</div>
-      <span>{store.isPlaying ? '正在播放' : '开始播放'}</span>
+      <nav>
+        <ul>
+          <li>
+            <NavLink exact to="/">
+              音乐馆
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/video">视频</NavLink>
+          </li>
+          <li>
+            <NavLink to="/radio">电台</NavLink>
+          </li>
+        </ul>
+      </nav>
     </div>
   ))
 }
