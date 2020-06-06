@@ -1,5 +1,6 @@
 import { uInstance } from './instance'
 import { commonConfig } from './commonConfig'
+import Recommend from './types/Recommend'
 
 const data = {
   comm: {
@@ -64,7 +65,7 @@ const data = {
   },
 }
 
-export const GET_RECOMMEND = () =>
+export const GET_RECOMMEND = (): Promise<Recommend> =>
   uInstance.get('cgi-bin/musicu.fcg', {
     params: { ...commonConfig, data },
   })

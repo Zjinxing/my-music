@@ -22,10 +22,7 @@ export class Instance {
     })
     this.instance.interceptors.response.use(
       (response: AxiosResponse) => {
-        if (response && response.status === 200) {
-          return Promise.resolve(response.data)
-        }
-        return Promise.resolve(response.data)
+        return response.data
       },
       (error: AxiosError) => {
         return Promise.reject(error.response)
