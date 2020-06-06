@@ -10,8 +10,8 @@ const URL =
     : `file://${path.join(__dirname, '../build/index.html')}`
 function createWindow() {
   win = new BrowserWindow({
-    width: 1008,
-    minWidth: 1008,
+    width: 1020,
+    minWidth: 1020,
     height: 695,
     minHeight: 695,
     titleBarStyle: 'hidden',
