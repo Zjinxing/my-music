@@ -6,6 +6,10 @@ import Music from './Music'
 import './index.scss'
 import Video from './Video'
 import Radio from './Radio'
+import Favorite from './Favorite'
+import Local from './Local'
+import DownLoad from './Download'
+import PlayHistory from './PlayHistory'
 
 const Container: React.FC = observer(() => {
   const store = useStore()
@@ -16,6 +20,10 @@ const Container: React.FC = observer(() => {
       <Route path="/" exact component={Music}></Route>
       <Route path="/video" component={Video}></Route>
       <Route path="/radio" component={Radio}></Route>
+      <Route path="/favorite" component={Favorite}></Route>
+      <Route path="/local" component={Local}></Route>
+      <Route path="/download" component={DownLoad}></Route>
+      <Route path="/playHistory" component={PlayHistory}></Route>
     </div>
   )
 })
