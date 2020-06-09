@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import { useStore } from 'store'
 import { observer } from 'mobx-react'
 import Music from './Music'
@@ -17,13 +17,14 @@ const Container: React.FC = observer(() => {
   return (
     <div className="container">
       <div className="container-header drag">可拖拽区域</div>
-      <Route path="/" exact component={Music}></Route>
+      <Route path="/music" component={Music}></Route>
       <Route path="/video" component={Video}></Route>
       <Route path="/radio" component={Radio}></Route>
       <Route path="/favorite" component={Favorite}></Route>
       <Route path="/local" component={Local}></Route>
       <Route path="/download" component={DownLoad}></Route>
       <Route path="/playHistory" component={PlayHistory}></Route>
+      <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
     </div>
   )
 })

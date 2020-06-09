@@ -19,7 +19,7 @@ const Aside: React.FC = () => {
         <ul className="aside-nav online">
           <span>在线音乐</span>
           <li className="aside-nav__link">
-            <NavLink exact to="/" activeClassName="active">
+            <NavLink exact to="/music" activeClassName="active">
               音乐馆
             </NavLink>
           </li>
