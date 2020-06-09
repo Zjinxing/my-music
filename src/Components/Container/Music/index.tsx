@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink, Route, useRouteMatch, Switch, Redirect } from 'react-router-dom'
+import './index.scss'
 import Choiceness from './components/Choiceness'
 import Singer from './components/Singer'
 import SongList from './components/SongList'
@@ -9,7 +10,7 @@ import Phone from './components/Phone'
 const Music: React.FC = () => {
   const { path, url } = useRouteMatch()
   return (
-    <div>
+    <div className="music">
       <h1>音乐馆</h1>
       <nav>
         <ul>

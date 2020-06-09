@@ -1,0 +1,34 @@
+@import 'src/common/style/variable.scss';
+
+.music {
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    li {
+      margin-right: 55px;
+      a {
+        display: inline-block;
+        color: color(textColor);
+        font-size: 14px;
+        font-weight: bold;
+        &.active {
+          position: relative;
+          padding-bottom: 8px;
+          color: color(primary);
+          &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 24px;
+            height: 3px;
+            transform: translateX(-50%);
+            background: color(primary);
+            border-radius: 3px;
+          }
+        }
+      }
+    }
+  }
+}
