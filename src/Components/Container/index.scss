@@ -1,5 +1,13 @@
 @import 'src/common/style/variable.scss';
 
 .container {
+  display: grid;
+  grid-template-rows: 75px auto 80px;
   background: color(bg);
+  &-header {
+    padding-left: 40px;
+  }
+  &-body {
+    padding-left: 40px;
+  }
 }
