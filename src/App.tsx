@@ -4,14 +4,16 @@ import { GET_RECOMMEND } from './request/recommand'
 import Aside from 'components/Aside'
 import Container from 'components/Container'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { useStore } from 'store'
 
 function App() {
+  const store = useStore()
   useEffect(() => {
     ;(async () => {
-      const rst = await GET_RECOMMEND()
-      console.log(rst)
+      const recommend = await GET_RECOMMEND()
+      store.recommend = recommend
     })()
-  }, [])
+  })
 
   return (
     <div className="App">

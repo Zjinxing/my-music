@@ -5,7 +5,6 @@ import Recommend, { AlbumDetail } from 'request/types/Recommend'
 import { HotSinger } from 'request/types/Singer'
 
 export interface State {
-  isDarkMode: boolean
   recommend: Recommend
   currentSonglistId: string // 当前歌单Id
   currentSongmid: string // 当前正在播放歌曲mid
@@ -18,17 +17,24 @@ export interface State {
   playMode: 'loop' | 'random' | 'singleLoop' // 播放模式
   isPlaying: boolean // 是否正在播放
   hotSinger: HotSinger[]
-  setData: (data: { [key: string]: any }) => void
-  addState: () => void
   [propName: string]: any
 }
 
-export const createStore = () => {
+export const createStore = (): State => {
+  const recommend = {} as Recommend
   return {
-    recommend: {},
+    recommend,
+    currentSonglistId: '',
+    currentSongmid: '',
+    currentRadioId: '',
+    currentSongUrl: '',
+    currentSongName: '',
     playlist: [],
     albumList: [],
+    albumArea: 1,
+    playMode: 'loop',
     isPlaying: false,
+    hotSinger: [],
   }
 }
 
