@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react'
+import React, { useState, FormEvent, KeyboardEvent } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import Music from './Music'
@@ -28,6 +28,12 @@ const Container: React.FC = observer(() => {
     setSearchValue(value)
   }
 
+  const handleSearch = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
+      console.log({ searchValue })
+    }
+  }
+
   return (
     <div className="container">
       <div className="container-header drag">
@@ -38,7 +44,7 @@ const Container: React.FC = observer(() => {
           </span>
           <div className="search-input">
             <span className={`search-input--bg ${searchBgClass}`}>
-              <img src={require('common/Enum').imgList.searchIcon} width="12" alt="" />
+              <img src={require('common/Enum').imgList.searchIcon} width="16" alt="" />
               搜索音乐
             </span>
             <input
@@ -48,8 +54,24 @@ const Container: React.FC = observer(() => {
               onFocus={handleFocus}
               onBlur={handleBlur}
               onChange={handleInput}
+              onKeyUp={handleSearch}
             />
           </div>
+        </div>
+        <div className="container-header--right">
+          <span className="login">
+            <img
+              src={require('common/Enum').imgList.defaultUser}
+              alt=""
+              width="28"
+              className="defaultUser"
+            />
+            点击登录
+          </span>
+          <img src={require('common/Enum').imgList.commentNormal} alt="" className="comment" />
+          <img src={require('common/Enum').imgList.skin} alt="" className="skin" />
+          <img src={require('common/Enum').imgList.setting} alt="" className="setting" />
+          <img src={require('common/Enum').imgList.toMini} alt="" className="toMini" width="18" />
         </div>
       </div>
       <div className="container-body">
