@@ -13,7 +13,7 @@ const Music: React.FC = () => {
     <div className="music">
       <h1>音乐馆</h1>
       <nav>
-        <ul>
+        <ul className="music-nav">
           <li>
             <NavLink to={`${url}/choiceness`}>精选</NavLink>
           </li>
