@@ -10,7 +10,11 @@ import Local from './Local'
 import DownLoad from './Download'
 import PlayHistory from './PlayHistory'
 
-const Container: React.FC = observer(() => {
+interface Props {
+  code: number
+}
+
+const Container: React.FC<Props> = observer(({ code }) => {
   const [searchBgClass, setSearchBgClass] = useState('')
   const [searchValue, setSearchValue] = useState('')
 
@@ -74,16 +78,20 @@ const Container: React.FC = observer(() => {
           <img src={require('common/Enum').imgList.toMini} alt="" className="toMini" width="18" />
         </div>
       </div>
-      <div className="container-body">
-        <Route path="/music" component={Music}></Route>
-        <Route path="/video" component={Video}></Route>
-        <Route path="/radio" component={Radio}></Route>
-        <Route path="/favorite" component={Favorite}></Route>
-        <Route path="/local" component={Local}></Route>
-        <Route path="/download" component={DownLoad}></Route>
-        <Route path="/playHistory" component={PlayHistory}></Route>
-        <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
-      </div>
+      {code === 0 ? (
+        <div className="container-body">
+          <Route path="/music" component={Music}></Route>
+          <Route path="/video" component={Video}></Route>
+          <Route path="/radio" component={Radio}></Route>
+          <Route path="/favorite" component={Favorite}></Route>
+          <Route path="/local" component={Local}></Route>
+          <Route path="/download" component={DownLoad}></Route>
+          <Route path="/playHistory" component={PlayHistory}></Route>
+          <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
+        </div>
+      ) : (
+        'loading...'
+      )}
       <div className="container-footer">底部播放控制</div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.scss'
 import { GET_RECOMMEND } from './request/recommand'
 import Aside from 'components/Aside'
@@ -8,10 +8,13 @@ import { useStore } from 'store'
 
 function App() {
   const store = useStore()
+  const [code, setCode] = useState(1)
   useEffect(() => {
     ;(async () => {
       const recommend = await GET_RECOMMEND()
+      console.log(recommend)
       store.recommend = recommend
+      setCode(recommend.code)
     })()
   })
 
@@ -20,7 +23,7 @@ function App() {
       <Router>
         <Aside></Aside>
         <Switch>
-          <Container></Container>
+          <Container code={code}></Container>
         </Switch>
       </Router>
     </div>

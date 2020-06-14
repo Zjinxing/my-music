@@ -93,6 +93,7 @@
     }
   }
   &-body {
-    padding-left: 40px;
+    max-width: calc(100vw - 210px);
+    padding: 0 40px;
   }
 }
