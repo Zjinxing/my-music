@@ -63,5 +63,24 @@
         }
       }
     }
+    .banner-dot {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      transform: translateX(-50%);
+      &-item {
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        margin: 0 5px;
+        background: #626263;
+        &.highlight {
+          background: #d2d2d2;
+        }
+      }
+    }
   }
 }
