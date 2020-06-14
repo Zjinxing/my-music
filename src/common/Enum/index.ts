@@ -9,4 +9,5 @@ export const imgList = {
   skin: require('resources/tv_skin.svg'),
   setting: require('resources/tv_setting.svg'),
   toMini: require('resources/tv_to_mini.svg'),
+  leftArrow: require('resources/left.svg'),
 }
