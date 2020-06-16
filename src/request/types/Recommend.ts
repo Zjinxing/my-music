@@ -1,46 +1,5 @@
 import { Singer, Album, SongDetailCommon } from './Playlist'
 
-export interface FocusContent {
-  cover: string
-  id: number
-  jump_info: {
-    id: number
-    mid: string
-    url: string
-  }
-  pic_info: {
-    mid: string
-    url: string
-    urlex1: string
-    urlex2: string
-  }
-  report: string
-  title: string
-  type: number
-}
-
-// 达人歌单列表
-export interface HotPlaylistItem {
-  album_pic_mid: string
-  content_id: number
-  cover: string
-  creator: number
-  edge_mark: string
-  id: number
-  is_dj: boolean
-  is_vip: boolean
-  jump_url: string
-  listen_num: number
-  pic_mid: string
-  rcmdcontent: string
-  rcmdtemplate: string
-  rcmdtype: number
-  title: string
-  tjreport: string
-  type: number
-  username: string
-}
-
 export interface Lan {
   lan: string
   name: string
@@ -126,7 +85,7 @@ export interface AlbumDetail {
   company: Company
   companyshow: Company
   ex: {
-    album_tag3: 0
+    album_tag3: number
     album_tag5: string
     desc: string
     playable_track_num: number
@@ -175,41 +134,312 @@ export interface AlbumTag {
   name: string
   tjreport: string
 }
+
+/**
+ * 首页推荐视频内歌手 interface
+ */
+interface VideoSinger {
+  id: number
+  mid: string
+  name: string
+  picurl: string
+}
+
+/**
+ * 首页推荐视频数据 interface
+ */
+export interface VideoData {
+  comment_cnt: number
+  diff: number
+  duration: number
+  has_fav: number
+  has_star: number
+  mv_switch: number
+  mvid: number
+  picurl: string
+  playcnt: number
+  pubdate: number
+  score: number
+  singers: VideoSinger[]
+  star_cnt: number
+  subtitle: string
+  title: string
+  uploader: { enc_uin: string; headurl: string; nick: string }
+  vid: string
+}
+
+/**
+ * 首页焦点图具体内容
+ */
+export interface V_card {
+  type: number
+  subtype: number
+  jumptype: number
+  id: string
+  subid: string
+  title: string
+  subtitle: string
+  cover: string
+  cnt: number
+  time: number
+  v_user: null
+  tjreport: string
+  trace: string
+  abt: string
+  miscellany: { CfgID: string }
+  pingpong: string
+  extra_info: null
+  scheme: string
+  style: number
+}
+
+/**
+ * 首页推荐焦点图
+ */
+interface V_niche {
+  id: number
+  title_template: string
+  title_content: string
+  style: number
+  more: {
+    jumptype: number
+    id: string
+    tjreport: string
+    trace: string
+    abt: string
+    pingpong: string
+    extra_info: null
+    scheme: string
+    title: string
+  }
+  v_card: V_card[]
+  bgpic: string
+  tjreport: string
+  trace: string
+  abt: string
+  miscellany: null
+  pingpong: string
+  extra_info: null
+}
+
+/**
+ * 官方歌单 modules 内部 grids interface
+ */
+interface Grid {
+  abt: string
+  author: string
+  badgeurl: string
+  clickurl: string
+  creator: {
+    avatar: string
+    badge: string
+    identity: number
+    nick: string
+    uin: string
+  }
+  exposeurl: string
+  id: number
+  jmpurl: string
+  listeners: number
+  magic: string
+  picurl: string
+  rcmdcontent: string
+  rcmdtemplate: string
+  readtime: number
+  recomm_type: number
+  source: number
+  source_type: number
+  subtitle: string
+  title: string
+  tjreport: string
+  type: number
+  updatetime: number
+  vid: string
+  view_type: number
+}
+/**
+ * 首页官方歌单 modules interface
+ */
+export interface Module {
+  color: string
+  display_format: number
+  grids: Grid[]
+  more: {
+    jmpurl: string
+    title: string
+    tjreport: string
+    type: number
+  }
+  name: string
+  title: string
+}
+
+interface Album1 extends Album {
+  pmid: string
+  time_public: string
+}
+
+interface SingerHome extends Singer {
+  type: number
+  uin: number
+}
+
+/**
+ * 首页最新发行歌曲 interface
+ */
+export interface SongHome {
+  action: {
+    alert: number
+    icons: number
+    msgdown: number
+    msgfav: number
+    msgid: number
+    msgpay: number
+    msgshare: number
+    switch: number
+  }
+  aid: number
+  album: Album1
+  bpm: number
+  data_type: number
+  es: string
+  file: {
+    b_30s: number
+    e_30s: number
+    hires_bitdepth: number
+    hires_sample: number
+    media_mid: string
+    size_128mp3: number
+    size_192aac: number
+    size_192ogg: number
+    size_24aac: number
+    size_320mp3: number
+    size_48aac: number
+    size_96aac: number
+    size_96ogg: number
+    size_ape: number
+    size_dts: number
+    size_flac: number
+    size_hires: number
+    size_try: number
+    try_begin: number
+    try_end: number
+    url: string
+  }
+  fnote: number
+  genre: number
+  id: number
+  index_album: number
+  index_cd: number
+  interval: number
+  isonly: number
+  ksong: { id: number; mid: string }
+  label: '0'
+  language: number
+  mid: string
+  modify_stamp: number
+  mv: { id: number; name: string; title: string; vid: string; vt: number }
+  name: string
+  ov: number
+  pay: {
+    pay_down: number
+    pay_month: number
+    pay_play: number
+    pay_status: number
+    price_album: number
+    price_track: number
+    time_free: number
+  }
+  pingpong: string
+  ppurl: string
+  sa: number
+  singer: SingerHome[]
+  status: number
+  subtitle: string
+  tid: number
+  time_public: string
+  title: string
+  trace: string
+  type: number
+  url: string
+  version: number
+  volume: { gain: number; lra: number; peak: number }
+}
+
+/**
+ * 首页数据
+ */
 export default interface Recommend {
-  category: any
-  focus: {
+  code: number
+  //推荐视频
+  req_0: {
     code: number
     data: {
-      content: Array<FocusContent>
+      list: VideoData[]
+      total: number
+    }
+  }
+  // 焦点图
+  req_1: {
+    code: number
+    data: {
+      shelf: {
+        id: number
+        title_template: string
+        title_content: string
+        style: number
+        more: {
+          jumptype: number
+          id: string
+          tjreport: string
+          trace: string
+          abt: string
+          pingpong: string
+          extra_info: null
+          scheme: string
+          title: string
+        }
+        feedback_opt: number
+        v_niche: V_niche[]
+        expire: number
+        tjreport: string
+        trace: string
+        abt: string
+        miscellany: null
+        pingpong: string
+        extra_info: null
+        replaceOpt: number
+        group: number
+        group_top: number
+      }
+    }
+  }
+  // 官方歌单
+  req_2: {
+    code: number
+    data: {
+      color: string
+      grids: []
       id: number
-      sub_cube: []
+      intervalInSeconds: number
+      modules: Module[]
+      more: { jmpurl: string; title: string; tjreport: string; type: number }
+      name: string
+      re_page: number
       title: string
     }
   }
-  new_album: {
+  // 首页最新发行
+  req_3: {
     code: number
     data: {
-      total: number
+      lan: string
+      lanlist: { lan: string; name: string; tjreport: string; type: number }[]
       ret_msg: string
-      albums: AlbumDetail[]
+      songlist: SongHome[]
+      type: number
     }
   }
-  new_album_tag: {
-    code: number
-    data: {
-      area: AlbumTag[]
-    }
-  }
-  new_song: NewSong
-  playlist: any
-  recomPlaylist: {
-    code: number
-    data: {
-      page: number
-      v_hot: HotPlaylistItem[]
-    }
-  }
-  toplist: any
-  code: number
+  start_ts: number
   ts: number
 }

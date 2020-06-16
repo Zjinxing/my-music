@@ -6,7 +6,7 @@ const Banner: React.FC = () => {
   const store = useStore()
   const [transX, setTransX] = useState(0)
   const [curDot, setCurDot] = useState(0)
-  const focus = store.recommend.focus.data.content
+  const focus = store.recommend.req_1.data.shelf.v_niche[0].v_card
   const MEDIA_MAX_WIDTH = 1610 // css 媒体查询宽度，超过此宽度显示3张轮播图
   console.log({ focus })
 
@@ -44,7 +44,7 @@ const Banner: React.FC = () => {
 
   const imgList = focus.map((item) => (
     <li className="banner-content-list-item" key={item.id}>
-      <img src={item.pic_info.url} alt="" />
+      <img src={item.cover} alt="" />
     </li>
   ))
 
