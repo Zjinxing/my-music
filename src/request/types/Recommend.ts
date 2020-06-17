@@ -414,7 +414,7 @@ export default interface Recommend {
       }
     }
   }
-  // 官方歌单
+  // 官方歌单和达人歌单 modules[0] 官方歌单 modules[1] 达人歌单
   req_2: {
     code: number
     data: {
