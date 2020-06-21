@@ -10,4 +10,7 @@ export const imgList = {
   setting: require('resources/tv_setting.svg'),
   toMini: require('resources/tv_to_mini.svg'),
   leftArrow: require('resources/left.svg'),
+  listen: require('resources/listen.svg'),
+  play: require('resources/play.svg'),
+  pause: require('resources/pause.svg'),
 }
