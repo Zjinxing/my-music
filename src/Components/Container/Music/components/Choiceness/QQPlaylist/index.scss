@@ -1,5 +1,5 @@
 .qq-playlist {
-  h2 {
+  &--title {
     margin: 0;
     small {
       margin-left: 15px;
@@ -8,5 +8,10 @@
       color: #8f8f8f;
       vertical-align: middle;
     }
+  }
+  &--list {
+    display: flex;
+    margin-top: 21px;
+    margin-left: -20px;
   }
 }

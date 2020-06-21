@@ -2,7 +2,7 @@
 
 .container {
   display: grid;
-  grid-template-rows: 75px auto 80px;
+  grid-template-rows: 75px calc(100vh - 155px) 80px;
   background: color(bg);
   &-header {
     display: flex;
@@ -95,5 +95,6 @@
   &-body {
     max-width: calc(100vw - 210px);
     padding: 0 40px;
+    overflow: overlay;
   }
 }
