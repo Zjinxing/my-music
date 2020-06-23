@@ -225,7 +225,7 @@ interface V_niche {
 /**
  * 官方歌单 modules 内部 grids interface
  */
-interface Grid {
+export interface Grid {
   abt: string
   author: string
   badgeurl: string
