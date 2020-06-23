@@ -1,0 +1,13 @@
+.hipster-list {
+  overflow: hidden;
+  &--title {
+    margin: 0;
+    small {
+      margin-left: 15px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #8f8f8f;
+      vertical-align: middle;
+    }
+  }
+}

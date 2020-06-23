@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useStore } from 'store'
 import Banner from './Banner'
 import QQPlaylist from './QQPlaylist'
+import HipsterList from './HipsterList'
 
 const Choiceness: React.FC = () => {
   const store = useStore()
@@ -13,6 +14,7 @@ const Choiceness: React.FC = () => {
     <div className="choiceness">
       <Banner></Banner>
       <QQPlaylist />
+      <HipsterList />
     </div>
   )
 }
