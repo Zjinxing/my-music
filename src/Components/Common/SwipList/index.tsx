@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStore } from 'store'
 import { Grid } from 'request/types/Recommend'
 import './index.scss'
@@ -10,6 +10,16 @@ interface PlaylistProps {
 
 const Playlist: React.FC<PlaylistProps> = props => {
   const store = useStore()
+  const [transClass, setTransClass] = useState('')
+
+  const toggleTransform = () => {
+    if (transClass) {
+      setTransClass('')
+    } else {
+      setTransClass('swiped')
+    }
+  }
+
   const liItem = props.swipList.map(item => (
     <li className="playlist-cover" key={item.id}>
       <div className="playlist-cover-content">
@@ -37,7 +47,27 @@ const Playlist: React.FC<PlaylistProps> = props => {
       )}
     </li>
   ))
-  return <ul className="swip_list">{liItem}</ul>
+  return (
+    <div className="swip">
+      <img
+        src={require('common/Enum').imgList.leftArrow}
+        alt=""
+        width="40"
+        className="swip-control--left"
+        onClick={toggleTransform}
+      />
+      <img
+        src={require('common/Enum').imgList.leftArrow}
+        alt=""
+        width="40"
+        className="swip-control--right"
+        onClick={toggleTransform}
+      />
+      <div className="swip-content">
+        <ul className={`swip_list ${transClass}`}>{liItem}</ul>
+      </div>
+    </div>
+  )
 }
 
 export default Playlist
