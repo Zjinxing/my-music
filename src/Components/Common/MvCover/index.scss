@@ -1,0 +1,65 @@
+@import 'common/style/index.scss';
+
+.video-list-item {
+  flex-shrink: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  .video-cover {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover {
+      transform: translateY(-10px);
+      .video-cover--bg {
+        filter: brightness(0.6);
+      }
+      .video-cover--control {
+        filter: brightness(1);
+        opacity: 1;
+      }
+    }
+    &--bg {
+      border-radius: 10px;
+    }
+    &--control {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: all 0.2s;
+      overflow: hidden;
+      &:hover {
+        img {
+          transform: translateX(-50px);
+          filter: drop-shadow(50px 0 color(primary));
+        }
+      }
+    }
+    .playcnt {
+      position: absolute;
+      right: 10px;
+      bottom: 15px;
+      padding: 2px 10px 2px 8px;
+      font-size: 12px;
+      border-radius: 11px;
+      background-color: rgba(5, 5, 5, 0.8);
+      .icon {
+        vertical-align: bottom;
+      }
+    }
+  }
+  &--title,
+  &--author {
+    display: inline-block;
+    width: 100%;
+    font-size: 13px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &--author {
+    color: #8f8f8f;
+  }
+}
