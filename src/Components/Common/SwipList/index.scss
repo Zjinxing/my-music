@@ -81,7 +81,6 @@
             padding-bottom: -5px;
             overflow: hidden;
             &:hover {
-              filter: invert(0);
               img {
                 transform: translateX(-50px);
                 filter: drop-shadow(50px 0 color(primary));
