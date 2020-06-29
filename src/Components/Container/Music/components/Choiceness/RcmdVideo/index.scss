@@ -1,0 +1,68 @@
+@import 'common/style/index.scss';
+
+.rcmdVideo {
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+  &-wrapper {
+    position: relative;
+    &:hover {
+      .rcmdVideo-list-control--left,
+      .rcmdVideo-list-control--right {
+        display: unset;
+      }
+    }
+    .rcmdVideo-list {
+      overflow: hidden;
+
+      &-control--left,
+      &-control--right {
+        position: absolute;
+        top: calc(50% - 10px);
+        transform: translateY(-50%);
+        cursor: pointer;
+        display: none;
+        @media (prefers-color-scheme: dark) {
+          filter: invert(0.8);
+        }
+      }
+
+      &-control--left {
+        left: -40px;
+        &:hover {
+          left: -41px;
+          filter: drop-shadow(1px 0 color(primary));
+        }
+      }
+      &-control--right {
+        right: -40px;
+        transform: translateY(-50%) scale(-1);
+        &:hover {
+          right: -41px;
+          filter: drop-shadow(1px 0 color(primary));
+        }
+      }
+      ul {
+        display: flex;
+        margin-left: -20px;
+        padding-top: 20px;
+        overflow: hidden;
+        li {
+          width: 20%;
+
+          @media (max-width: 1370px) {
+            width: 25%;
+          }
+          @media (max-width: 1190px) {
+            width: 33.33%;
+          }
+        }
+      }
+    }
+  }
+}
