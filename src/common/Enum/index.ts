@@ -13,4 +13,6 @@ export const imgList = {
   listen: require('resources/listen.svg'),
   play: require('resources/play.svg'),
   pause: require('resources/pause.svg'),
+  vedio: require('resources/lv_video.svg'),
+  mv: require('resources/mv.svg'),
 }
