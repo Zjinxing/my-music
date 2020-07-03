@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MvCover from 'components/Common/MvCover'
 import { VideoData } from 'request/types/Recommend'
 import './index.scss'
@@ -13,6 +13,22 @@ const Video: React.FC<Props> = props => {
   const MEDIA_WIDTH_MEDIUM = 1190
   const MEDIA_WIDTH_LARGE = 1370
 
+  useEffect(() => {
+    const resizeListener = () => {
+      let prev = Date.now()
+      return () => {
+        const now = Date.now()
+        if (now - prev > 1000) {
+          setTransX(0)
+          prev = Date.now()
+        }
+      }
+    }
+    window.addEventListener('resize', resizeListener())
+    return () => {
+      window.removeEventListener('resize', resizeListener())
+    }
+  }, [])
   const scrollLeft = () => {
     const { length } = list
     const { width: bodyWidth } = document.body.getBoundingClientRect()

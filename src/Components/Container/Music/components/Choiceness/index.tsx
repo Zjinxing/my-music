@@ -4,6 +4,7 @@ import Banner from './Banner'
 import QQPlaylist from './QQPlaylist'
 import HipsterList from './HipsterList'
 import RcmdVideo from 'components/Container/Music/components/Choiceness/RcmdVideo'
+import Newest from './Newest'
 
 const Choiceness: React.FC = () => {
   const store = useStore()
@@ -17,6 +18,7 @@ const Choiceness: React.FC = () => {
       <QQPlaylist />
       <HipsterList />
       <RcmdVideo mvList={store.recommend.req_0.data.list} />
+      <Newest data={store.recommend.req_3.data} />
     </div>
   )
 }
