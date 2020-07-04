@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './index.scss'
 import { SongHome } from 'request/types/Recommend'
 
@@ -11,11 +11,48 @@ interface Props {
 }
 
 const Newest: React.FC<Props> = props => {
-  const scrollLeft = () => {}
+  const [transX, setTransX] = useState(0)
+  const MEDIA_WIDTH_MEDIUM = 1190
+  const MEDIA_WIDTH_LARGE = 1370
+  const LENGTH = props.data.songlist.slice(0, 20).length
 
-  const scrollRight = () => {}
+  const scrollLeft = () => {
+    const { width: bodyWidth } = document.body.getBoundingClientRect()
+    const compareNum =
+      bodyWidth <= MEDIA_WIDTH_MEDIUM
+        ? Math.ceil(LENGTH / 4) - 1
+        : bodyWidth <= MEDIA_WIDTH_LARGE
+        ? Math.ceil(LENGTH / 5) - 1
+        : Math.ceil(LENGTH / 6) - 1
+    if (transX === 0) {
+      setTransX(-compareNum * 100)
+    } else {
+      setTransX(transX + 100)
+    }
+  }
 
-  const li = props.data.songlist.slice(0, 16).map(item => {
+  const scrollRight = () => {
+    const { width: bodyWidth } = document.body.getBoundingClientRect()
+    const compareNum =
+      bodyWidth <= MEDIA_WIDTH_MEDIUM
+        ? Math.ceil(LENGTH / 4) - 1
+        : bodyWidth <= MEDIA_WIDTH_LARGE
+        ? Math.ceil(LENGTH / 5) - 1
+        : Math.ceil(LENGTH / 6) - 1
+    if (Math.abs(transX / 100) === compareNum) {
+      setTransX(0)
+    } else {
+      setTransX(transX - 100)
+    }
+  }
+
+  const lanlist = props.data.lanlist.map(item => (
+    <li className={item.lan === props.data.lan ? 'current' : ''} key={item.name}>
+      {item.lan}
+    </li>
+  ))
+
+  const li = props.data.songlist.slice(0, 20).map(item => {
     const singers = item.singer.map((singer, index) => (
       <span key={singer.id}>
         <span className="singer-name">{singer.name}</span>
@@ -33,7 +70,7 @@ const Newest: React.FC<Props> = props => {
             <img src={require('common/Enum').imgList.play} alt="" />
           </span>
         </div>
-        <span className="cover-title">{item.album.title}</span>
+        <span className="cover-title">{item.name}</span>
         <span className="cover-authors">{singers}</span>
         <span className="cover-createdAt">{item.album.time_public}</span>
       </li>
@@ -44,7 +81,16 @@ const Newest: React.FC<Props> = props => {
     <div className="newest">
       <div className="newest-title">
         <h2>最新发行</h2>
-        <span>更多</span>
+        <ul className="newest-title--lanlist">{lanlist}</ul>
+        <span className="newest-title--more">
+          更多
+          <img
+            src={require('common/Enum').imgList.nextAction}
+            width="20"
+            className="more-right-icon"
+            alt=""
+          />
+        </span>
       </div>
       <div className="newest-swipe swipe">
         <img
@@ -62,7 +108,7 @@ const Newest: React.FC<Props> = props => {
           onClick={scrollRight}
         />
         <div className="newest-swipe-list">
-          <ul>{li}</ul>
+          <ul style={{ transform: `translateX(${transX}%)` }}>{li}</ul>
         </div>
       </div>
     </div>

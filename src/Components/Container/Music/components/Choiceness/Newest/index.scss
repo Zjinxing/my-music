@@ -51,6 +51,9 @@
     width: 100%;
     font-weight: 600;
     line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     .singer-name {
       cursor: pointer;
       color: #8f8f8f;
@@ -70,7 +73,48 @@
 
 .newest {
   &-title {
+    position: relative;
     display: flex;
+    align-items: center;
+    font-size: 13px;
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      margin-right: 20px;
+    }
+    &--lanlist {
+      display: flex;
+      font-size: 12px;
+      line-height: 24px;
+      li {
+        cursor: pointer;
+        margin-right: 30px;
+        &:hover {
+          color: color(primary);
+        }
+      }
+      .current {
+        color: color(primary);
+      }
+    }
+    &--more {
+      position: absolute;
+      right: 0;
+      cursor: pointer;
+      .more-right-icon {
+        vertical-align: top;
+        @media (prefers-color-scheme: dark) {
+          filter: invert(0.8);
+        }
+      }
+      &:hover {
+        color: color(primary);
+        .more-right-icon {
+          transform: translateX(-1px);
+          filter: drop-shadow(1px 0 color(primary));
+        }
+      }
+    }
   }
   &-swipe {
     position: relative;
@@ -112,6 +156,7 @@
         padding-top: 20px;
         margin-left: -20px;
         display: flex;
+        transition: all 0.2s;
       }
     }
   }
