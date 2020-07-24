@@ -19,6 +19,9 @@
       flex-shrink: 0;
     }
   }
+  .playlist-cover-content:hover {
+    transform: none;
+  }
   &--list {
     flex: 1;
     padding: 0 20px 0 18px;
@@ -31,6 +34,17 @@
       line-height: 25px;
       font-size: 13px;
       color: #929293;
+    }
+  }
+}
+
+.toplist-other {
+  &--items {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 22px;
+    .playlist-cover-content.rank-cover {
+      width: 125px;
     }
   }
 }

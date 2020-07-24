@@ -46,10 +46,17 @@ const Rank: React.FC = () => {
                 </div>
               )
             }
+            return (
+              <div className="toplist-other">
+                <h2>{item.groupName}</h2>
+                <div className="toplist-other--items">
+                  {item.toplist.map(toplist => (
+                    <ListCover imgUrl={toplist.frontPicUrl} count={toplist.listenNum} />
+                  ))}
+                </div>
+              </div>
+            )
           })}
-          <div>地区榜</div>
-          <div>特色榜</div>
-          <div>全球榜</div>
         </>
       )}
     </div>
