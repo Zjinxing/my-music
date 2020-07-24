@@ -4,6 +4,7 @@ import './index.scss'
 import Choiceness from './components/Choiceness'
 import Singer from './components/Singer'
 import SongList from './components/SongList'
+import Toplist from './components/Toplist'
 import Voices from './components/Voices'
 import Phone from './components/Phone'
 
@@ -38,9 +39,7 @@ const Music: React.FC = () => {
         <Route path={`${path}/choiceness`}>
           <Choiceness></Choiceness>
         </Route>
-        <Route path={`${path}/rank`}>
-          <span>排行</span>
-        </Route>
+        <Route path={`${path}/rank`} component={Toplist}></Route>
         <Route path={`${path}/singer`} component={Singer}></Route>
         <Route path={`${path}/type`} component={SongList}></Route>
         <Route path={`${path}/voice`} component={Voices}></Route>
