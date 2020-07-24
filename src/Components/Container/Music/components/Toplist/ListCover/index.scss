@@ -1,0 +1,61 @@
+@import 'common/style/index.scss';
+
+.playlist-cover-content {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+  font-size: 12px;
+  transition: all 0.2s;
+  &:hover {
+    // transform: translateY(-10px);
+    cursor: pointer;
+    .playlist-cover-content--bg {
+      filter: brightness(0.6);
+    }
+    .playlist-cover-content--control {
+      opacity: 1;
+    }
+    .listeners {
+      display: none;
+    }
+  }
+  &--bg {
+    width: 100%;
+    border-radius: 10px;
+    transition: all 0.2s;
+  }
+  &--control {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    transition: all 0.2s;
+    padding-bottom: -5px;
+    overflow: hidden;
+    &:hover {
+      img {
+        transform: translateX(-50px);
+        filter: drop-shadow(50px 0 color(primary));
+      }
+    }
+  }
+  .listeners {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+    padding: 0 10px 0 8px;
+    border-radius: 11px;
+    background-color: rgba(5, 5, 5, 0.8);
+    .icon {
+      filter: invert(1);
+      vertical-align: top;
+    }
+  }
+}
+
+.rank-cover {
+  width: 150px;
+  margin: 0;
+}
