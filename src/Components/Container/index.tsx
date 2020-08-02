@@ -1,6 +1,7 @@
 import React, { useState, FormEvent, KeyboardEvent } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
+import PlaylistDetail from 'components/Common/PlaylistDetail'
 import Music from './Music'
 import './index.scss'
 import Video from './Video'
@@ -17,6 +18,7 @@ interface Props {
 const Container: React.FC<Props> = observer(({ code }) => {
   const [searchBgClass, setSearchBgClass] = useState('')
   const [searchValue, setSearchValue] = useState('')
+  const history = useHistory()
 
   const handleFocus = () => {
     setSearchBgClass('focus')
@@ -43,7 +45,14 @@ const Container: React.FC<Props> = observer(({ code }) => {
       <div className="container-header drag">
         <div className="container-header--left">
           <span className="nav-action">
-            <img src={require('common/Enum').imgList.backAction} width="22" alt="" />
+            <img
+              src={require('common/Enum').imgList.backAction}
+              onClick={() => {
+                history.go(-1)
+              }}
+              width="22"
+              alt=""
+            />
             <img src={require('common/Enum').imgList.nextAction} width="22" alt="" />
           </span>
           <div className="search-input">
@@ -87,6 +96,7 @@ const Container: React.FC<Props> = observer(({ code }) => {
           <Route path="/local" component={Local}></Route>
           <Route path="/download" component={DownLoad}></Route>
           <Route path="/playHistory" component={PlayHistory}></Route>
+          <Route path="/playlist-detail/:id" component={PlaylistDetail}></Route>
           <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
         </div>
       ) : (
