@@ -1,6 +1,6 @@
 import { useLocalStore } from 'mobx-react'
 import React, { createContext, useContext } from 'react'
-import { SongDetail } from 'request/types/Playlist'
+import { PlaylistSong } from 'request/types/Playlist'
 import Recommend, { AlbumDetail } from 'request/types/Recommend'
 import { HotSinger } from 'request/types/Singer'
 
@@ -12,7 +12,7 @@ export interface State {
   currentSongUrl: string // 当前播放歌曲地址
   currentSongName: string // 当前播放歌曲的名称
   currentPlaylistId: number // 当前播放列表 id
-  playlist: SongDetail[] // 当前播放列表详情
+  playlist: PlaylistSong[] // 当前播放列表详情
   albumList: AlbumDetail[] // 首页新专辑
   albumArea: 1 | 2 | 3 | 4 | 5 | 6 // 当前专辑地区
   playMode: 'loop' | 'random' | 'singleLoop' // 播放模式
