@@ -1,4 +1,4 @@
-import { Singer, Album, SongDetailCommon } from './Playlist'
+import { SongDetailCommon } from './Playlist'
 
 export interface Lan {
   lan: string
@@ -7,12 +7,21 @@ export interface Lan {
   type: number
 }
 
-interface NewSongSinger extends Singer {
+interface NewSongSinger {
+  id: number
+  mid: string
+  name: string
+  title: string
   type: number
   uin: number
 }
 
-interface NewSongAlbum extends Album {
+interface NewSongAlbum {
+  id: number
+  mid: string
+  name: string
+  title: string
+  subtitle: string
   pmid: string
   time_public: string
 }
@@ -274,12 +283,21 @@ export interface Module {
   title: string
 }
 
-interface Album1 extends Album {
+interface Album1 {
+  id: number
+  mid: string
+  name: string
+  title: string
+  subtitle: string
   pmid: string
   time_public: string
 }
 
-interface SingerHome extends Singer {
+interface SingerHome {
+  id: number
+  mid: string
+  name: string
+  title: string
   type: number
   uin: number
 }
