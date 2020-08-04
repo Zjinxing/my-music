@@ -1,0 +1,26 @@
+@import 'common/style/index.scss';
+button {
+  border: 1px solid #575757;
+  outline: none;
+  border-radius: 3px;
+  padding: 2px 15px;
+  color: #fff;
+  cursor: pointer;
+  color: color(textColor);
+  background-color: #303030;
+  padding: 8px 15px;
+  border-radius: 18px;
+  border: none;
+  font-weight: bold;
+  font-size: 13px;
+  &:hover {
+    background-color: #383838;
+  }
+}
+
+button.primary {
+  background-color: color(primary);
+  &:hover {
+    background-color: #28bf8c;
+  }
+}
