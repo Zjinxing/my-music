@@ -15,4 +15,7 @@ export const imgList = {
   pause: require('resources/pause.svg'),
   vedio: require('resources/lv_video.svg'),
   mv: require('resources/mv.svg'),
+  rv_play: require('resources/rv_play.svg'),
+  bvNotLike: require('resources/bv_not_like.svg'),
+  rvMore: require('resources/rv_more.svg'),
 }
