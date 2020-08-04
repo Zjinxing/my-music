@@ -1,0 +1,80 @@
+@import 'common/style/index.scss';
+.playlist {
+  padding-top: 20px;
+  &-header {
+    display: grid;
+    grid-template-columns: 170px minmax(0, calc(100% - 236px));
+    column-gap: 27px;
+    &--logo {
+      border-radius: 10px;
+    }
+    .header-detail {
+      h1 {
+        margin-top: 0;
+      }
+      .header-info {
+        font-size: 12px;
+        &--nick {
+          color: color(textColor);
+        }
+        &--avatar {
+          vertical-align: middle;
+          margin-right: 7px;
+        }
+        &--tags {
+          color: #8f8f8f;
+          margin-left: 18px;
+        }
+      }
+      .header-desc {
+        position: relative;
+        color: #8f8f8f;
+        font-size: 12px;
+        padding-right: 50px;
+      }
+      .header-controls {
+        display: flex;
+        align-items: center;
+        &-btn {
+          width: 110px;
+          margin-right: 10px;
+          .prefix-icon {
+            vertical-align: bottom;
+            filter: invert(1);
+            margin-right: 5px;
+          }
+        }
+        .more {
+          width: 34px;
+          height: 34px;
+          &-icon {
+            position: relative;
+            display: inline-block;
+            width: 2px;
+            height: 2px;
+            background-color: #fff;
+            transform: translateY(-3px);
+            &::after {
+              content: '';
+              position: absolute;
+              display: inline-block;
+              right: -5px;
+              width: 2px;
+              height: 2px;
+              background-color: #fff;
+            }
+            &::before {
+              content: '';
+              position: absolute;
+              display: inline-block;
+              left: -5px;
+              width: 2px;
+              height: 2px;
+              background-color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
