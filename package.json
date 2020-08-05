@@ -42,6 +42,7 @@
     "extends": null
   },
   "dependencies": {
+    "antd": "^4.5.2",
     "axios": "^0.19.2",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
