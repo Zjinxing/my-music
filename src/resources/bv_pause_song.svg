@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"><defs>
+<linearGradient id="theme_linear_gradient_color" x1="0%" x2="100%" y1="50%" y2="50%">
+<stop id="theme_linear_color1" offset="0%" stop-color="#1ECC94" />
+<stop id="theme_linear_color2" offset="100%" stop-color="#20D6C0"/>
+</linearGradient>
+</defs><path fill="url(#theme_linear_gradient_color)" fill-rule="evenodd" d="M17.5 35c-9.665 0-17.5-7.835-17.5-17.5s7.835-17.5 17.5-17.5 17.5 7.835 17.5 17.5-7.835 17.5-17.5 17.5zm-4-25a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 1 0 3 0v-12a1.5 1.5 0 0 0-1.5-1.5zm8 0a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 1 0 3 0v-12a1.5 1.5 0 0 0-1.5-1.5z"/></svg>
