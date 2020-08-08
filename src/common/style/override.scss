@@ -1,0 +1,45 @@
+@import 'variable.scss';
+.ant-tabs-tab {
+  color: color(textColor);
+  &:hover {
+    color: color(primary);
+  }
+  &:active {
+    .ant-tabs-tab-btn {
+      color: color(primary) !important;
+    }
+  }
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: color(primary);
+}
+.ant-tabs {
+  line-height: 1;
+}
+.ant-tabs-nav::before {
+  display: none;
+}
+.ant-tabs-nav-wrap {
+  text-align: left;
+  .ant-tabs-tab {
+    &-active {
+      color: #3fc080;
+    }
+    &:hover {
+      color: #3fc080;
+    }
+  }
+  .ant-tabs-ink-bar {
+    background-color: #3fc080;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+    background-color: rgb(57, 57, 57);
+  }
+}
