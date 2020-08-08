@@ -77,4 +77,89 @@
       }
     }
   }
+  &-content {
+    .songlist {
+      color: color(textColor);
+      font-size: 13px;
+      font-weight: bold;
+      &-item {
+        display: grid;
+        grid-template-columns: 45% 1fr 1fr 80px;
+        height: 50px;
+        line-height: 50px;
+        box-sizing: border-box;
+        &:hover {
+          background-color: #f2f2f2;
+          .songlist-item--controls {
+            display: unset;
+          }
+          .songlist-item--name {
+            padding-right: 135px;
+          }
+          .icon-inner {
+            display: unset !important;
+          }
+          @media (prefers-color-scheme: dark) {
+            background-color: #252526;
+          }
+        }
+        &--name {
+          position: relative;
+          display: flex;
+          padding-right: 10px;
+          .icon-wrapper {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin: 0 8px;
+            background: url('../../../resources/bv_not_like.svg') no-repeat;
+            filter: invert(1);
+            cursor: pointer;
+            vertical-align: text-bottom;
+            &:hover {
+              background: url('../../../resources/bv_not_like_h.svg') no-repeat;
+              filter: none;
+            }
+          }
+          .mv-icon {
+            cursor: pointer;
+            &:hover {
+              filter: brightness(0);
+              @media (prefers-color-scheme: dark) {
+                filter: brightness(2);
+              }
+            }
+          }
+        }
+        &--icons {
+          img {
+            margin-left: 6px;
+            vertical-align: middle;
+          }
+        }
+        &--controls {
+          position: absolute;
+          display: none;
+          right: 10px;
+          .controls-icon {
+            margin-left: 13px;
+            cursor: pointer;
+            filter: invert(0.6);
+            overflow: hidden;
+            .icon-inner {
+              display: none;
+              vertical-align: middle;
+            }
+            &:hover {
+              filter: invert(0);
+              .icon-inner {
+                transform: translateY(-40px);
+                filter: drop-shadow(0 40px color(primary));
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
