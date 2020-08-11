@@ -10,6 +10,7 @@ import Favorite from './Favorite'
 import Local from './Local'
 import DownLoad from './Download'
 import PlayHistory from './PlayHistory'
+import PlayControl from './PlayControl'
 
 interface Props {
   code: number
@@ -102,7 +103,7 @@ const Container: React.FC<Props> = observer(({ code }) => {
       ) : (
         'loading...'
       )}
-      <div className="container-footer">底部播放控制</div>
+      <PlayControl></PlayControl>
     </div>
   )
 })

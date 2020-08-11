@@ -60,3 +60,9 @@ export const imgList = {
   rvBatch: require('resources/rv_batch.svg'),
   rvDelete: require('resources/rv_delete.svg'),
 }
+
+export enum PlayMode {
+  LOOP = 'loop',
+  RANDOM = 'random',
+  SINGLE_LOOP = 'singleLoop',
+}

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+/* eslint-disable no-restricted-globals */
+import React, { useState, MouseEvent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useStore } from 'store'
 import { Grid } from 'request/types/Recommend'
 import './index.scss'
+import { GET_LIST_DETAIL, GET_VKEY } from 'request/playlist'
 
 interface PlaylistProps {
   swipList: Grid[]
@@ -21,12 +23,30 @@ const Playlist: React.FC<PlaylistProps> = props => {
     }
   }
 
+  const playSonglist = async (e: MouseEvent, id: number) => {
+    e.preventDefault()
+    const list = await GET_LIST_DETAIL(String(id))
+    console.log(list.response.cdlist[0].songlist)
+    const { songlist } = list.response.cdlist[0]
+    store.playlist = songlist
+    store.currentPlaylistId = id
+    store.currentSongmid = songlist[0].mid
+    const vkeyDetail = await GET_VKEY(songlist[0].mid)
+    const songUrl = vkeyDetail.response.playLists[0]
+    store.currentSongUrl = songUrl
+    store.isPlaying = true
+    store.currentSong = songlist[0]
+  }
+
   const liItem = props.swipList.map(item => (
     <li className="playlist-cover" key={item.id}>
       <NavLink to={`/playlist-detail/${item.id}`}>
         <div className="playlist-cover-content">
           <img src={item.picurl} alt="" className="playlist-cover-content--bg" />
-          <span className="playlist-cover-content--control">
+          <span
+            className="playlist-cover-content--control"
+            onClick={event => playSonglist(event, item.id)}
+          >
             <img
               src={
                 store.currentPlaylistId === item.id

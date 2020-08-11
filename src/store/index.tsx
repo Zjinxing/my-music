@@ -12,6 +12,7 @@ export interface State {
   currentSongUrl: string // 当前播放歌曲地址
   currentSongName: string // 当前播放歌曲的名称
   currentPlaylistId: number // 当前播放列表 id
+  currentSong: PlaylistSong | null // 当前播放歌曲
   playlist: PlaylistSong[] // 当前播放列表详情
   albumList: AlbumDetail[] // 首页新专辑
   albumArea: 1 | 2 | 3 | 4 | 5 | 6 // 当前专辑地区
@@ -31,6 +32,7 @@ export const createStore = (): State => {
     currentSongUrl: '',
     currentSongName: '',
     currentPlaylistId: 0,
+    currentSong: null,
     playlist: [],
     albumList: [],
     albumArea: 1,
