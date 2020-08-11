@@ -1,0 +1,43 @@
+.play-control {
+  .control-content {
+    display: grid;
+    grid-template-columns: 1fr 182px 1fr;
+    padding: 14px 40px;
+    &--left {
+      display: grid;
+      grid-template-columns: 40px auto;
+      grid-template-rows: 20px 20px;
+      column-gap: 14px;
+      width: 268px;
+      font-size: 13px;
+      .cover-bg {
+        border-radius: 3px;
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+      }
+      .current-name {
+        padding-left: 3px;
+        font-weight: bold;
+        &--singer {
+          color: #8f8f8f;
+        }
+      }
+      &__operator {
+        filter: invert(0.5);
+        .operator-icon {
+          margin-right: 16px;
+          vertical-align: -webkit-baseline-middle;
+          cursor: pointer;
+        }
+      }
+    }
+    &--center {
+      display: grid;
+      grid-template-columns: 1fr 1fr 56px 1fr 1fr;
+      place-items: center;
+      .control-icon {
+        filter: invert(1);
+      }
+    }
+  }
+}

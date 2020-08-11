@@ -1,0 +1,58 @@
+.progress-wrapper {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  .progress-background {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #8a8a8a;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+  .progress-cover {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 2px;
+    background: #3fc080;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  .progress-drag {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: transparent;
+    transform: translateY(-50%);
+    z-index: 20;
+  }
+  .progress-truck {
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: #3fc080;
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    z-index: 1;
+  }
+  &:hover {
+    .progress-truck {
+      visibility: visible;
+    }
+  }
+}
+.vertical {
+  width: 10px;
+  height: 100%;
+  .progress-background {
+    width: 2px;
+    height: 100%;
+  }
+}
