@@ -19,6 +19,7 @@ export interface State {
   playMode: 'loop' | 'random' | 'singleLoop' // 播放模式
   isPlaying: boolean // 是否正在播放
   hotSinger: HotSinger[]
+  effect: string
   [propName: string]: any
 }
 
@@ -39,6 +40,7 @@ export const createStore = (): State => {
     playMode: 'loop',
     isPlaying: false,
     hotSinger: [],
+    effect: '',
   }
 }
 
