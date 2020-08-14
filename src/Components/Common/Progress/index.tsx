@@ -51,7 +51,7 @@ const Progress: React.FC<Props> = props => {
     } else {
       timer = setTimeout(() => {
         const targetInfo = JSON.parse(localStorage.getItem('targetInfo') || '{}') as TargetInfo
-        const { top, height, width } = targetInfo
+        const { top, height } = targetInfo
         const { pageX, pageY } = (e as unknown) as MouseEvent
         const pos = { pageX, pageY }
         if (height && top) {

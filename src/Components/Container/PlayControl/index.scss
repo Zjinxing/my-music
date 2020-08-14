@@ -102,6 +102,46 @@
         filter: invert(0.5);
         cursor: pointer;
       }
+      .control-icon {
+        position: relative;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        overflow: hidden;
+        cursor: pointer;
+        img {
+          position: absolute;
+          top: 0;
+        }
+        &:hover {
+          filter: invert(0);
+          img {
+            top: -20px;
+            filter: drop-shadow(0 20px var(--color-primary));
+          }
+        }
+      }
+    }
+    .right-wrapper {
+      .control-icon {
+        position: relative;
+        display: inline-block;
+        width: 41px;
+        height: 15px;
+        overflow: hidden;
+        cursor: pointer;
+        img {
+          position: absolute;
+          top: 0;
+        }
+        &:hover {
+          filter: invert(0);
+          img {
+            top: -20px;
+            filter: drop-shadow(0 20px var(--color-primary));
+          }
+        }
+      }
     }
     &:hover {
       .right-wrapper {

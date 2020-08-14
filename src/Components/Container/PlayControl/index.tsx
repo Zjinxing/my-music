@@ -1,3 +1,7 @@
+/**
+ * 底部播放控制逻辑
+ */
+
 import React, { useState, useRef, SyntheticEvent } from 'react'
 import { observer } from 'mobx-react'
 import Progress, { TargetInfo, MousePos } from 'components/Common/Progress'
@@ -5,6 +9,9 @@ import { useStore } from 'store'
 import { PlayMode } from 'common/Enum'
 import './index.scss'
 import { formatSeconds } from 'common/utils'
+import { GET_VKEY } from 'request/playlist'
+import { PlaylistSong } from 'request/types/Playlist'
+import VolumeControl from './VolumeControl'
 
 const PlayControl: React.FC = observer(() => {
   const store = useStore()
@@ -33,6 +40,20 @@ const PlayControl: React.FC = observer(() => {
     setPercent(percent)
   }
 
+  const progressChangeEnd = (targetInfo: TargetInfo, pos: MousePos) => {
+    const { left, width } = targetInfo
+    const { pageX } = pos
+    if (left && width) {
+      const compute = ((pageX - left) / width) * 100
+      const percent = compute >= 100 ? 100 : compute <= 0 ? 0 : compute
+      const currentTime = (duration * percent) / 100
+      console.log('----------拖动结束---------\n', currentTime, duration, percent)
+      audioRef.current!.currentTime = currentTime
+      setIsDragging(false)
+    }
+  }
+
+  // 播放暂停
   const togglePlay = () => {
     if (store.isPlaying) {
       audioRef.current?.pause()
@@ -52,10 +73,113 @@ const PlayControl: React.FC = observer(() => {
     setCurrentTime(current)
   }
 
+  // 播放下一首
+  const playNext = async () => {
+    if (!store.playlist.length) return
+    store.isPlaying = false
+    if (store.playMode === PlayMode.SINGLE_LOOP || store.playMode === PlayMode.LOOP) {
+      const currentIndex = store.playlist.findIndex(item => item.mid === store.currentSongmid)
+      let nextSong: PlaylistSong
+      if (currentIndex === store.playlist.length - 1) {
+        nextSong = store.playlist[0]
+      } else {
+        nextSong = store.playlist[currentIndex + 1]
+      }
+      const vkeyDetail = await GET_VKEY(nextSong.mid)
+      const songUrl = vkeyDetail.response.playLists[0]
+      store.currentSongUrl = songUrl
+      store.currentSong = nextSong
+      store.currentSongmid = nextSong.mid
+      store.currentSongName = nextSong.name
+    } else {
+      playRandom()
+    }
+  }
+
+  // 播放上一首
+  const playPre = async () => {
+    if (!store.playlist.length) return
+    store.isPlaying = false
+    if (store.playMode === PlayMode.SINGLE_LOOP || store.playMode === PlayMode.LOOP) {
+      const currentIndex = store.playlist.findIndex(item => item.mid === store.currentSongmid)
+      let preSong: PlaylistSong
+      if (currentIndex === 0) {
+        preSong = store.playlist[store.playlist.length - 1]
+      } else {
+        preSong = store.playlist[currentIndex - 1]
+      }
+      const vkeyDetail = await GET_VKEY(preSong.mid)
+      const songUrl = vkeyDetail.response.playLists[0]
+      store.currentSongUrl = songUrl
+      store.currentSong = preSong
+      store.currentSongmid = preSong.mid
+      store.currentSongName = preSong.name
+    } else {
+      playRandom()
+    }
+  }
+
+  // 随机播放
+  const playRandom = async () => {
+    if (!store.playlist.length) return
+    const randomIndex = ~~(Math.random() * store.playlist.length)
+    const nextSong = store.playlist[randomIndex]
+    const vkeyDetail = await GET_VKEY(nextSong.mid)
+    const songUrl = vkeyDetail.response.playLists[0]
+    store.currentSongUrl = songUrl
+    store.currentSong = nextSong
+    store.currentSongmid = nextSong.mid
+    store.currentSongName = nextSong.name
+  }
+
+  // 切换播放模式
+  const togglePlayMode = () => {
+    switch (store.playMode) {
+      case PlayMode.LOOP:
+        store.playMode = PlayMode.SINGLE_LOOP
+        break
+      case PlayMode.SINGLE_LOOP:
+        store.playMode = PlayMode.RANDOM
+        break
+      case PlayMode.RANDOM:
+        store.playMode = PlayMode.LOOP
+        break
+      default:
+        break
+    }
+  }
+
+  // 播放结束处理
+  const onEnded = (e: SyntheticEvent<HTMLAudioElement>) => {
+    const target = e.target as HTMLAudioElement
+    switch (store.playMode) {
+      case PlayMode.SINGLE_LOOP:
+        target.play()
+        break
+      case PlayMode.LOOP:
+        playNext()
+        break
+      case PlayMode.RANDOM:
+        playRandom()
+        break
+      default:
+        break
+    }
+  }
+
+  const changeVolume = (percent: number) => {
+    audioRef.current && (audioRef.current.volume = percent / 100)
+  }
+
   return (
     <div className="play-control">
-      <Progress width={percent} onProgressChange={onProgressChange}></Progress>
+      <Progress
+        width={percent}
+        onProgressChange={onProgressChange}
+        onProgressChangeEnd={progressChangeEnd}
+      ></Progress>
       <div className="control-content">
+        {/* 左侧歌曲封面及歌曲名歌手名 */}
         <div className="control-content--left">
           <img
             src={`https://y.gtimg.cn/music/photo_new/T002R800x800M000${store.currentSong?.album.mid}.jpg?max_age=2592000`}
@@ -81,8 +205,9 @@ const PlayControl: React.FC = observer(() => {
             <img src={require('common/Enum').imgList.rvMore} className="operator-icon" alt="" />
           </span>
         </div>
+        {/* 中间播放暂停上一首下一首及播放模式切换 */}
         <div className="control-content--center">
-          <span className="control-icon">
+          <span className="control-icon" onClick={togglePlayMode}>
             {store.playMode === PlayMode.LOOP ? (
               <img src={require('common/Enum').imgList.playModeOrder} alt="" />
             ) : store.playMode === PlayMode.RANDOM ? (
@@ -91,7 +216,7 @@ const PlayControl: React.FC = observer(() => {
               <img src={require('common/Enum').imgList.playModeSingle} alt="" />
             )}
           </span>
-          <span className="control-icon">
+          <span className="control-icon" onClick={playPre}>
             <img src={require('common/Enum').imgList.preSong} alt="" />
           </span>
           <span className="control-icon" onClick={togglePlay}>
@@ -101,13 +226,14 @@ const PlayControl: React.FC = observer(() => {
               <img src={require('common/Enum').imgList.playSong} alt="" />
             )}
           </span>
-          <span className="control-icon">
+          <span className="control-icon" onClick={playNext}>
             <img src={require('common/Enum').imgList.nextSong} alt="" />
           </span>
-          <span className="control-icon">
-            <img src={require('common/Enum').imgList.volume} alt="" />
-          </span>
+          {/* <span className="control-icon"> */}
+          <VolumeControl onVolumeChange={changeVolume}></VolumeControl>
+          {/* </span> */}
         </div>
+        {/* 右侧时间显示及列表控制 */}
         <div className="control-content--right">
           <div className="right-wrapper">
             <span className="control-icon">
@@ -137,6 +263,7 @@ const PlayControl: React.FC = observer(() => {
         src={store.currentSongUrl}
         onLoadedMetadata={loadedMetaData}
         onTimeUpdate={onProgress}
+        onEnded={onEnded}
       ></audio>
     </div>
   )
