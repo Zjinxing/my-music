@@ -55,7 +55,6 @@ export const StoreProvider: React.FC = ({ children }) => {
 
 export const useStore = () => {
   const store = useContext(StoreContext)
-  console.log({ store })
   if (!store) throw new Error('You have forgot to use StoreProvider, shame on you.')
   return store
 }
