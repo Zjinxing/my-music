@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { GET_LIST_DETAIL } from 'request/playlist'
-import { Cdlist } from 'request/types/Playlist'
+import { observer } from 'mobx-react'
+import { GET_LIST_DETAIL, GET_VKEY } from 'request/playlist'
+import { Cdlist, PlaylistSong } from 'request/types/Playlist'
 import Button from 'components/Common/Button'
 import { Tabs } from 'antd'
 import 'antd/lib/tabs/style/index.css'
 import { formatSeconds } from 'common/utils'
 import './index.scss'
+import { useStore } from 'store'
 
 interface RouteProps {
   id: string
 }
 
-const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
+const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props => {
+  const store = useStore()
   const [listDetail, setListDetail] = useState<Cdlist>()
   useEffect(() => {
     ;(async () => {
@@ -24,6 +27,37 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
 
   console.log('ID', props.match.params.id)
   const { TabPane } = Tabs
+
+  // 播放全部
+  const playAll = async () => {
+    if (!listDetail) return
+    store.playlist = listDetail.songlist
+    const currentSong = store.playlist[0]
+    const vkeyDetail = await GET_VKEY(currentSong.mid)
+    const songUrl = vkeyDetail.response.playLists[0]
+    store.currentSongUrl = songUrl
+    store.currentSong = currentSong
+    store.currentSongmid = currentSong.mid
+    store.currentSongName = currentSong.name
+  }
+
+  const playSong = (song: PlaylistSong) => {
+    return async () => {
+      if (store.isPlaying && store.currentSongmid === song.mid) {
+        // 处理正在播放当前歌曲
+        store.isPlaying = false
+      } else {
+        store.currentSong = song
+        const vkeyDetail = await GET_VKEY(song.mid)
+        const songUrl = vkeyDetail.response.playLists[0]
+        store.currentSongUrl = songUrl
+        store.currentSong = song
+        store.currentSongmid = song.mid
+        store.currentSongName = song.name
+      }
+    }
+  }
+
   return (
     <div className="playlist">
       <div className="playlist-header">
@@ -41,7 +75,7 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
           </p>
           <p className="header-desc one-line-ellipsis">{listDetail?.desc}</p>
           <div className="header-controls">
-            <Button type="primary" className="header-controls-btn">
+            <Button type="primary" className="header-controls-btn" onClick={playAll}>
               <img src={require('common/Enum').imgList.rv_play} className="prefix-icon" alt="" />
               播放全部
             </Button>
@@ -60,14 +94,14 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
           <TabPane tab={`歌曲${listDetail?.songlist.length || ''}`} key="song">
             <ul className="songlist">
               {listDetail?.songlist.map(song => (
-                <li className="songlist-item">
+                <li className="songlist-item" key={song.mid}>
                   <div className="songlist-item--name one-line-ellipsis">
                     <span className="songlist-item--name__text one-line-ellipsis">
                       <span className="icon-wrapper"></span>
                       {song.name}
                     </span>
                     <div className="songlist-item--icons">
-                      {song.isonly ? (
+                      {song.pay.pay_play ? (
                         <img src={require('common/Enum').imgList.listVIPICon} alt="" />
                       ) : null}
                       {song.file.size_ape || song.file.size_flac ? (
@@ -84,9 +118,13 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
                       )}
                     </div>
                     <div className="songlist-item--controls">
-                      <span className="controls-icon">
+                      <span className="controls-icon" onClick={playSong(song)}>
                         <img
-                          src={require('common/Enum').imgList.rv_play}
+                          src={
+                            store.isPlaying && store.currentSongmid === song.mid
+                              ? require('common/Enum').imgList.rvPause
+                              : require('common/Enum').imgList.rv_play
+                          }
                           className="icon-inner"
                           alt=""
                         />
@@ -130,6 +168,6 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
       </div>
     </div>
   )
-}
+})
 
 export default PlaylistDetail
