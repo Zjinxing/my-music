@@ -2,7 +2,7 @@
  * 底部播放控制逻辑
  */
 
-import React, { useState, useRef, SyntheticEvent } from 'react'
+import React, { useState, useRef, SyntheticEvent, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import Progress, { TargetInfo, MousePos } from 'components/Common/Progress'
 import { useStore } from 'store'
@@ -21,6 +21,14 @@ const PlayControl: React.FC = observer(() => {
   const [isDragging, setIsDragging] = useState(false)
 
   const audioRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    if (store.isPlaying) {
+      audioRef.current?.play()
+    } else {
+      audioRef.current?.pause()
+    }
+  }, [store.isPlaying])
 
   const loadedMetaData = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
     const target = e.target as HTMLAudioElement
@@ -55,13 +63,7 @@ const PlayControl: React.FC = observer(() => {
 
   // 播放暂停
   const togglePlay = () => {
-    if (store.isPlaying) {
-      audioRef.current?.pause()
-      store.isPlaying = false
-    } else {
-      audioRef.current?.play()
-      store.isPlaying = true
-    }
+    store.isPlaying = !store.isPlaying
   }
 
   // 播放更新进度条
