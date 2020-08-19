@@ -1,5 +1,6 @@
 :root {
   --color-textColor: #000;
+  --color-grayText: #7d7d7d;
   --color-primary: #34ca97;
   --color-bg: #f6f6f6;
   --color-sideBg: #f0f0f0;
@@ -9,6 +10,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-textColor: #fff;
+    --color-grayText: #8f8f8f;
     --color-bg: #1e1e1f;
     --color-sideBg: #171718;
     --color-sideLink: #a2a2a3;
