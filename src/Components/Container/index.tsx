@@ -2,6 +2,7 @@ import React, { useState, FormEvent, KeyboardEvent } from 'react'
 import { Route, Redirect, useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import PlaylistDetail from 'components/Common/PlaylistDetail'
+import AlbumDetail from 'components/Common/AlbumDetail'
 import Music from './Music'
 import './index.scss'
 import Video from './Video'
@@ -98,6 +99,7 @@ const Container: React.FC<Props> = observer(({ code }) => {
           <Route path="/download" component={DownLoad}></Route>
           <Route path="/playHistory" component={PlayHistory}></Route>
           <Route path="/playlist-detail/:id" component={PlaylistDetail}></Route>
+          <Route path="/album-detail/:id" component={AlbumDetail}></Route>
           <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
         </div>
       ) : (
