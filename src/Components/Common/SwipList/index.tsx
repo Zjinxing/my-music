@@ -5,13 +5,14 @@ import { useStore } from 'store'
 import { Grid } from 'request/types/Recommend'
 import './index.scss'
 import { GET_LIST_DETAIL, GET_VKEY } from 'request/playlist'
+import { useObserver, observer } from 'mobx-react'
 
 interface PlaylistProps {
   swipList: Grid[]
   type: 'qq' | 'hiper' | 'latest'
 }
 
-const Playlist: React.FC<PlaylistProps> = props => {
+const Playlist: React.FC<PlaylistProps> = observer(props => {
   const store = useStore()
   const [transClass, setTransClass] = useState('')
 
@@ -25,17 +26,21 @@ const Playlist: React.FC<PlaylistProps> = props => {
 
   const playSonglist = async (e: MouseEvent, id: number) => {
     e.preventDefault()
-    const list = await GET_LIST_DETAIL(String(id))
-    console.log(list.response.cdlist[0].songlist)
-    const { songlist } = list.response.cdlist[0]
-    store.playlist = songlist
-    store.currentPlaylistId = id
-    store.currentSongmid = songlist[0].mid
-    const vkeyDetail = await GET_VKEY(songlist[0].mid)
-    const songUrl = vkeyDetail.response.playLists[0]
-    store.currentSongUrl = songUrl
-    store.isPlaying = true
-    store.currentSong = songlist[0]
+    if (!store.isPlaying) {
+      const list = await GET_LIST_DETAIL(String(id))
+      const { songlist } = list.response.cdlist[0]
+      store.playType = 'playlist'
+      store.playlist = songlist
+      store.currentPlaylistId = id
+      store.currentSongmid = songlist[0].mid
+      const vkeyDetail = await GET_VKEY(songlist[0].mid)
+      const songUrl = vkeyDetail.response.playLists[0]
+      store.currentSongUrl = songUrl
+      store.isPlaying = true
+      store.currentSong = songlist[0]
+    } else {
+      store.isPlaying = false
+    }
   }
 
   const liItem = props.swipList.map(item => (
@@ -49,7 +54,9 @@ const Playlist: React.FC<PlaylistProps> = props => {
           >
             <img
               src={
-                store.currentPlaylistId === item.id
+                store.currentPlaylistId === item.id &&
+                store.playType === 'playlist' &&
+                store.isPlaying
                   ? require('common/Enum').imgList.pause
                   : require('common/Enum').imgList.play
               }
@@ -91,6 +98,6 @@ const Playlist: React.FC<PlaylistProps> = props => {
       </div>
     </div>
   )
-}
+})
 
 export default Playlist
