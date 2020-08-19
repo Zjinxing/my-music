@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import './index.scss'
 import { useStore } from 'store'
 
@@ -42,9 +43,12 @@ const Banner: React.FC = () => {
     }
   }
 
-  const imgList = focus.map((item) => (
+  const imgList = focus.map(item => (
     <li className="banner-content-list-item" key={item.id}>
-      <img src={item.cover} alt="" />
+      <NavLink to={`/album-detail/${item.subid}`}>
+        {/* TODO: 数字专辑信息获取不全 */}
+        <img src={item.cover} alt="" />
+      </NavLink>
     </li>
   ))
 
@@ -54,7 +58,7 @@ const Banner: React.FC = () => {
     let dotCount = Math.ceil(focus.length / visibleImgCount)
     const arr: number[] = []
     while (dotCount--) arr.unshift(dotCount)
-    return arr.map((item) => (
+    return arr.map(item => (
       <li className={`banner-dot-item ${item === curDot ? 'highlight' : ''}`} key={item}></li>
     ))
   }
