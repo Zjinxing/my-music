@@ -12,6 +12,7 @@ import { formatSeconds } from 'common/utils'
 import { GET_VKEY } from 'request/playlist'
 import { PlaylistSong } from 'request/types/Playlist'
 import VolumeControl from './VolumeControl'
+import { AlbumSongDetail } from 'request/types/Album'
 
 const PlayControl: React.FC = observer(() => {
   const store = useStore()
@@ -183,20 +184,36 @@ const PlayControl: React.FC = observer(() => {
       <div className="control-content">
         {/* 左侧歌曲封面及歌曲名歌手名 */}
         <div className="control-content--left">
-          <img
-            src={`https://y.gtimg.cn/music/photo_new/T002R800x800M000${store.currentSong?.album.mid}.jpg?max_age=2592000`}
-            width="40"
-            height="40"
-            alt=""
-            className="cover-bg"
-          />
-          <span className="current-name">
-            {store.currentSong?.title}
-            <span className="current-name--singer">
-              &nbsp;-{' '}
-              {store.currentSong?.singer.reduce((acc, cur) => acc + ' / ' + cur.name, '').slice(2)}
-            </span>
-          </span>
+          {(() => {
+            let currentSong, singers, albummid
+            if (store.playType === 'playlist') {
+              currentSong = store.currentSong as PlaylistSong
+              singers = currentSong?.singer
+              albummid = currentSong?.album.mid
+            } else if (store.playType === 'album') {
+              currentSong = store.currentSong as AlbumSongDetail
+              singers = currentSong?.singer
+              albummid = currentSong?.albummid
+            }
+            return (
+              <>
+                <img
+                  src={`https://y.gtimg.cn/music/photo_new/T002R800x800M000${albummid}.jpg?max_age=2592000`}
+                  width="40"
+                  height="40"
+                  alt=""
+                  className="cover-bg"
+                />
+                <span className="current-name">
+                  {store.currentSongName}
+                  <span className="current-name--singer">
+                    &nbsp;-{' '}
+                    {singers && singers.reduce((acc, cur) => acc + ' / ' + cur.name, '').slice(2)}
+                  </span>
+                </span>
+              </>
+            )
+          })()}
           <span className="control-content--left__operator">
             <img src={require('common/Enum').imgList.bvNotLike} className="operator-icon" alt="" />
             <img
