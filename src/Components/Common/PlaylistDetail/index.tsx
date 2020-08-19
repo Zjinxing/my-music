@@ -31,6 +31,7 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props
   // 播放全部
   const playAll = async () => {
     if (!listDetail) return
+    store.playType = 'playlist'
     store.playlist = listDetail.songlist
     const currentSong = store.playlist[0]
     const vkeyDetail = await GET_VKEY(currentSong.mid)
@@ -43,6 +44,8 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props
 
   const playSong = (song: PlaylistSong) => {
     return async () => {
+      store.playlist = listDetail!.songlist
+      store.playType = 'playlist'
       if (store.isPlaying && store.currentSongmid === song.mid) {
         // 处理正在播放当前歌曲
         store.isPlaying = false
@@ -93,6 +96,12 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props
         <Tabs defaultActiveKey="song">
           <TabPane tab={`歌曲${listDetail?.songlist.length || ''}`} key="song">
             <ul className="songlist">
+              <li className="songlist-item list-header">
+                <span>歌曲</span>
+                <span>歌手</span>
+                <span>专辑</span>
+                <span>时长</span>
+              </li>
               {listDetail?.songlist.map(song => (
                 <li className="songlist-item" key={song.mid}>
                   <div className="songlist-item--name one-line-ellipsis">
