@@ -1,4 +1,4 @@
-import { AlbumDetail, AlbumTag } from './Recommend'
+import { SongHome } from './Recommend'
 
 export interface SingerBase {
   id: number
@@ -92,17 +92,21 @@ export interface AlbumInfo {
 
 export interface NewAlbum {
   code: number
-  new_album: {
+  ts: number
+  start_ts: number
+  new_song: {
     code: number
     data: {
-      albums: AlbumDetail[]
+      lan: string
+      lanlist: {
+        lan: string
+        name: string
+        tjreport: string
+        type: number
+      }[]
       ret_msg: string
-      total: number
+      songlist: SongHome[]
+      type: number
     }
   }
-  new_album_tag: {
-    code: number
-    data: AlbumTag
-  }
-  ts: number
 }
