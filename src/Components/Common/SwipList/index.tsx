@@ -5,7 +5,7 @@ import { useStore } from 'store'
 import { Grid } from 'request/types/Recommend'
 import './index.scss'
 import { GET_LIST_DETAIL, GET_VKEY } from 'request/playlist'
-import { useObserver, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 
 interface PlaylistProps {
   swipList: Grid[]
