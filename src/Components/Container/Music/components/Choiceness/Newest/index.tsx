@@ -1,13 +1,14 @@
 /**
  * 最新发行
  */
-import React, { useState, MouseEvent } from 'react'
+import React, { useState, MouseEvent, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { SongHome } from 'request/types/Recommend'
 import './index.scss'
 import { GET_ALBUMINFO } from 'request/album'
 import { useStore } from 'store'
 import { GET_VKEY } from 'request/playlist'
+import { GET_NEW_LIST, Area } from 'request/recommand'
 
 interface Props {
   data: {
@@ -19,11 +20,18 @@ interface Props {
 
 const Newest: React.FC<Props> = props => {
   const [transX, setTransX] = useState(0)
+  const [list, setList] = useState<SongHome[]>([])
+  const [lan, setLan] = useState('最新')
   const MEDIA_WIDTH_MEDIUM = 1190
   const MEDIA_WIDTH_LARGE = 1370
   const LENGTH = props.data.songlist.slice(0, 20).length
 
   const store = useStore()
+
+  useEffect(() => {
+    setLan(props.data.lan)
+    setList(props.data.songlist)
+  }, [props.data.lan, props.data.songlist])
 
   const scrollLeft = () => {
     const { width: bodyWidth } = document.body.getBoundingClientRect()
@@ -70,17 +78,24 @@ const Newest: React.FC<Props> = props => {
     store.isPlaying = true
   }
 
+  const getNewestByLan = async (area: number) => {
+    setLan(Area[area])
+    const result = await GET_NEW_LIST(area)
+    console.log(result)
+    setList(result.new_song.data.songlist)
+  }
+
   const lanlist = props.data.lanlist.map(item => (
-    <li className={item.lan === props.data.lan ? 'current' : ''} key={item.name}>
+    <li
+      className={item.lan === lan ? 'current' : ''}
+      key={item.name}
+      onClick={() => getNewestByLan(item.type)}
+    >
       {item.lan}
     </li>
   ))
 
-  const getList = (id: SongHome) => {
-    console.log(id)
-  }
-
-  const li = props.data.songlist.slice(0, 20).map(item => {
+  const li = list.slice(0, 20).map(item => {
     const singers = item.singer.map((singer, index) => (
       <span key={singer.id}>
         <span className="singer-name">{singer.name}</span>
@@ -88,7 +103,7 @@ const Newest: React.FC<Props> = props => {
       </span>
     ))
     return (
-      <li className="newest-cover cover-item" key={item.id} onClick={() => getList(item)}>
+      <li className="newest-cover cover-item" key={item.id}>
         <NavLink to={`/album-detail/${item.album.mid}`}>
           <div className="newest-cover--bg cover-item--bg">
             <img
