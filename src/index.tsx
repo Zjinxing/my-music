@@ -4,6 +4,7 @@ import { StoreProvider } from 'store'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import 'common/utils/encryptSign'
 
 ReactDOM.render(
   <StoreProvider>
