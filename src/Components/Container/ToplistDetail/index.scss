@@ -1,0 +1,32 @@
+.toplist-detail {
+  &__header {
+    display: grid;
+    grid-template-columns: 170px auto;
+    column-gap: 28px;
+    .toplist-detail__header--pic {
+      border-radius: 10px;
+    }
+    &--info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #8f8f8f;
+      h2 {
+        color: var(--color-textColor);
+        margin: 10px 0 0;
+        font-size: 30px;
+      }
+      .control-btns {
+        button {
+          margin-right: 10px;
+        }
+        .prefix-icon {
+          vertical-align: top;
+          margin-right: 5px;
+          filter: invert(1);
+        }
+      }
+    }
+  }
+}

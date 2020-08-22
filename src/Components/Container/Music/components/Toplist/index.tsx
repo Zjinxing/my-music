@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { getToplist } from 'request/topList'
 import { ToplistGroup } from 'request/types/Toplist'
 import './index.scss'
 import ListCover from './ListCover'
+import { GET_RANK_DETAIL } from 'request/playlist'
 
 const Rank: React.FC = () => {
   const [code, setCode] = useState(-1)
@@ -18,6 +20,12 @@ const Rank: React.FC = () => {
     })()
   }, [])
 
+  const getListDetail = async (topId: number) => {
+    console.log(topId)
+    const list = await GET_RANK_DETAIL(topId)
+    console.log(list)
+  }
+
   return (
     <div>
       {code !== 0 && !list?.length ? (
@@ -27,31 +35,39 @@ const Rank: React.FC = () => {
           {list.map((item, index) => {
             if (index === 0) {
               return (
-                <div className="toplist-top">
+                <div className="toplist-top" key={item.groupId}>
                   {item.toplist.map(toplist => (
-                    <div className="toplist-top--item">
+                    <NavLink
+                      to={`/toplist-detail/${toplist.topId}`}
+                      className="toplist-top--item"
+                      key={toplist.topId}
+                    >
                       <ListCover imgUrl={toplist.frontPicUrl} count={toplist.listenNum}></ListCover>
                       <div className="toplist-top--list">
                         <h3>{toplist.title}</h3>
                         <ul>
                           {toplist.song.map((song, idx) => (
-                            <li className="one-line-ellipsis">{`${idx + 1} ${song.title} - ${
-                              song.singerName
-                            }`}</li>
+                            <li className="one-line-ellipsis" key={song.title}>
+                              {`${idx + 1} ${song.title} - ${song.singerName}`}
+                            </li>
                           ))}
                         </ul>
                       </div>
-                    </div>
+                    </NavLink>
                   ))}
                 </div>
               )
             }
             return (
-              <div className="toplist-other">
+              <div className="toplist-other" key={item.groupId}>
                 <h2>{item.groupName}</h2>
                 <div className="toplist-other--items">
                   {item.toplist.map(toplist => (
-                    <ListCover imgUrl={toplist.frontPicUrl} count={toplist.listenNum} />
+                    <ListCover
+                      imgUrl={toplist.frontPicUrl}
+                      count={toplist.listenNum}
+                      key={toplist.topId}
+                    />
                   ))}
                 </div>
               </div>
