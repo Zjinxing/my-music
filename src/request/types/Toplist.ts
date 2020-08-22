@@ -1,3 +1,5 @@
+import { SongHome } from './Recommend'
+
 export interface TopInnerSong {
   rank: number
   rankType: number
@@ -75,6 +77,76 @@ export interface Toplist {
       refreshInterval: number
       abt: string
       group: ToplistGroup[]
+    }
+  }
+}
+
+export interface ToplistDetail {
+  code: number
+  ts: number
+  start_ts: number
+  detail: {
+    code: number
+    data: {
+      data: {
+        topId: number
+        recType: number
+        topType: number
+        updateType: number
+        title: string
+        titleDetail: string
+        titleShare: string
+        titleSub: string
+        intro: string
+        cornerMark: number
+        period: string
+        updateTime: string
+        history: {
+          year: []
+          subPeriod: []
+        }
+        listenNum: number
+        totalNum: number
+        headPicUrl: string
+        frontPicUrl: string
+        mbFrontPicUrl: string
+        mbHeadPicUrl: string
+        pcSubTopIds: []
+        pcSubTopTitles: []
+        subTopIds: []
+        adJumpUrl: string
+        h5JumpUrl: string
+        url_key: string
+        url_params: string
+        tjreport: string
+        rt: number
+        updateTips: string
+        bannerText: string
+        AdShareContent: string
+        abt: string
+        cityId: number
+        provId: number
+        sinceCV: number
+        musichallTitle: string
+        musichallSubtitle: string
+        musichallPicUrl: string
+        song: {
+          rank: string
+          rankType: string
+          rankValue: string
+          recType: string
+          songId: string
+          vid: string
+          albumMid: string
+          title: string
+          singerName: string
+          singerMid: string
+          songType: string
+          uuidCnt: string
+        }[]
+      }
+      songInfoList: SongHome[]
+      extInfoList: { commentNum: number }[]
     }
   }
 }

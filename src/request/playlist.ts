@@ -1,6 +1,12 @@
+import dayjs from 'dayjs'
 import { Playlist } from './types/Playlist'
-import { lInstance } from './instance'
+import { lInstance, uInstance } from './instance'
 import { MusicVkey } from './types/MusicVkey'
+import { generateSign } from 'common/utils'
+import { commonConfig } from './commonConfig'
+import { ToplistDetail } from './types/Toplist'
+
+const weekOfYear = require('dayjs/plugin/weekOfYear')
 
 export const GET_LIST_DETAIL = (disstid: string): Promise<Playlist> =>
   lInstance.get('getSongListDetail', { params: { disstid } })
@@ -11,3 +17,23 @@ export const GET_LIST_DETAIL = (disstid: string): Promise<Playlist> =>
  */
 export const GET_VKEY = (songmid: string): Promise<MusicVkey> =>
   lInstance.get('getMusicVkey', { params: { songmid } })
+
+/**
+ * 获取排行榜详情
+ */
+export const GET_RANK_DETAIL = (topId: number, num: number = 100): Promise<ToplistDetail> => {
+  dayjs.extend(weekOfYear)
+  const period =
+    topId === 26 ? (dayjs() as any).week() : dayjs().subtract(12, 'h').format('YYYY-MM-DD')
+  console.log({ period })
+  const data = {
+    detail: {
+      module: 'musicToplist.ToplistInfoServer',
+      method: 'GetDetail',
+      param: { topId, offset: 0, num, period },
+    },
+    comm: { ct: 24, cv: 0 },
+  }
+  const sign = generateSign(data)
+  return uInstance.get('cgi-bin/musics.fcg', { params: { ...commonConfig, '-': '', sign, data } })
+}
