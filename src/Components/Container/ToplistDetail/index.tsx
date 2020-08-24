@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { GET_RANK_DETAIL } from 'request/playlist'
+import { GET_RANK_DETAIL, GET_VKEY } from 'request/playlist'
 import { RouteComponentProps } from 'react-router-dom'
 import './index.scss'
 import { SongHome } from 'request/types/Recommend'
 import Button from 'components/Common/Button'
 import { useStore } from 'store'
-import { formatSeconds } from 'common/utils'
+import { formatSeconds, formatIndex } from 'common/utils'
 
 interface RouteProps {
   topId: string
@@ -19,25 +19,6 @@ const ToplistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
 
   const store = useStore()
 
-  const playSong = (song: SongHome) => {
-    return async () => {
-      // store.playlist = songlist
-      store.playType = 'playlist'
-      if (store.isPlaying && store.currentSongmid === song.mid) {
-        // 处理正在播放当前歌曲
-        store.isPlaying = false
-      } else {
-        // store.currentSong = song
-        // const vkeyDetail = await GET_VKEY(song.mid)
-        // const songUrl = vkeyDetail.response.playLists[0]
-        // store.currentSongUrl = songUrl
-        // store.currentSong = song
-        // store.currentSongmid = song.mid
-        // store.currentSongName = song.name
-      }
-    }
-  }
-
   useEffect(() => {
     ;(async () => {
       const result = await GET_RANK_DETAIL(Number(props.match.params.topId))
@@ -49,6 +30,26 @@ const ToplistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
       setIntro(result.detail.data.data.intro)
     })()
   }, [props.match.params.topId])
+
+  const playSong = (song: SongHome) => {
+    return async () => {
+      store.playlistRank = songlist
+      store.playType = 'rank'
+      if (store.isPlaying && store.currentSongmid === song.mid) {
+        // 处理正在播放当前歌曲
+        store.isPlaying = false
+      } else {
+        store.currentSong = song
+        const vkeyDetail = await GET_VKEY(song.mid)
+        const songUrl = vkeyDetail.response.playLists[0]
+        store.currentSongUrl = songUrl
+        store.currentSong = song
+        store.currentSongmid = song.mid
+        store.currentSongName = song.name
+      }
+    }
+  }
+
   return (
     <div className="toplist-detail">
       <div className="toplist-detail__header">
@@ -94,7 +95,7 @@ const ToplistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
             <li className="songlist-item" key={song.mid}>
               <div className="songlist-item--name one-line-ellipsis">
                 <span className="songlist-item--name__text one-line-ellipsis">
-                  <span>{idx + 1}</span>
+                  <span>{formatIndex(idx + 1)}</span>
                   <span className="icon-wrapper"></span>
                   {song.name}
                 </span>
