@@ -62,6 +62,25 @@ const PlayControl: React.FC = observer(() => {
     }
   }
 
+  const getPlaylist = () => {
+    let playlist
+    switch (store.playType) {
+      case 'playlist':
+        playlist = store.playlist
+        break
+      case 'album':
+        playlist = store.playlistAlbum
+        break
+      case 'rank':
+        playlist = store.playlistRank
+        break
+      default:
+        playlist = store.playlist
+        break
+    }
+    return playlist
+  }
+
   // 播放暂停
   const togglePlay = () => {
     store.isPlaying = !store.isPlaying
@@ -78,22 +97,27 @@ const PlayControl: React.FC = observer(() => {
 
   // 播放下一首
   const playNext = async () => {
-    if (!store.playlist.length) return
+    if (!store.playlist.length && !store.playlistAlbum.length && !store.playlistRank.length) return
     store.isPlaying = false
+    let playlist = getPlaylist()
+    console.log({ playlist })
+
     if (store.playMode === PlayMode.SINGLE_LOOP || store.playMode === PlayMode.LOOP) {
-      const currentIndex = store.playlist.findIndex(item => item.mid === store.currentSongmid)
-      let nextSong: PlaylistSong
-      if (currentIndex === store.playlist.length - 1) {
-        nextSong = store.playlist[0]
+      const currentIndex = playlist.findIndex(
+        (item: any) => (item.mid || item.songmid) === store.currentSongmid
+      )
+      let nextSong: any
+      if (currentIndex === playlist.length - 1) {
+        nextSong = playlist[0]
       } else {
-        nextSong = store.playlist[currentIndex + 1]
+        nextSong = playlist[currentIndex + 1]
       }
-      const vkeyDetail = await GET_VKEY(nextSong.mid)
+      const vkeyDetail = await GET_VKEY(nextSong.mid || nextSong.songmid)
       const songUrl = vkeyDetail.response.playLists[0]
       store.currentSongUrl = songUrl
       store.currentSong = nextSong
-      store.currentSongmid = nextSong.mid
-      store.currentSongName = nextSong.name
+      store.currentSongmid = nextSong.mid || nextSong.songmid
+      store.currentSongName = nextSong.name || nextSong.songname
     } else {
       playRandom()
     }
@@ -101,22 +125,33 @@ const PlayControl: React.FC = observer(() => {
 
   // 播放上一首
   const playPre = async () => {
-    if (!store.playlist.length) return
+    if (!store.playlist.length && !store.playlistAlbum.length && !store.playlistRank.length) return
     store.isPlaying = false
+    let playlist = getPlaylist()
     if (store.playMode === PlayMode.SINGLE_LOOP || store.playMode === PlayMode.LOOP) {
-      const currentIndex = store.playlist.findIndex(item => item.mid === store.currentSongmid)
-      let preSong: PlaylistSong
+      const currentIndex = playlist.findIndex(
+        (item: any) => (item.mid || item.songmid) === store.currentSongmid
+      )
+      let preSong
       if (currentIndex === 0) {
-        preSong = store.playlist[store.playlist.length - 1]
+        preSong = playlist[playlist.length - 1]
       } else {
-        preSong = store.playlist[currentIndex - 1]
+        preSong = playlist[currentIndex - 1]
       }
-      const vkeyDetail = await GET_VKEY(preSong.mid)
+      let mid, songName
+      if (store.playType === 'album') {
+        mid = (preSong as AlbumSongDetail).songmid
+        songName = (preSong as AlbumSongDetail).songname
+      } else {
+        mid = (preSong as PlaylistSong).mid
+        songName = (preSong as PlaylistSong).name
+      }
+      const vkeyDetail = await GET_VKEY(mid)
       const songUrl = vkeyDetail.response.playLists[0]
       store.currentSongUrl = songUrl
       store.currentSong = preSong
-      store.currentSongmid = preSong.mid
-      store.currentSongName = preSong.name
+      store.currentSongmid = mid
+      store.currentSongName = songName
     } else {
       playRandom()
     }
@@ -124,15 +159,17 @@ const PlayControl: React.FC = observer(() => {
 
   // 随机播放
   const playRandom = async () => {
-    if (!store.playlist.length) return
-    const randomIndex = ~~(Math.random() * store.playlist.length)
-    const nextSong = store.playlist[randomIndex]
-    const vkeyDetail = await GET_VKEY(nextSong.mid)
+    if (!store.playlist.length && !store.playlistAlbum.length && !store.playlistRank.length) return
+    let playlist = getPlaylist()
+
+    const randomIndex = ~~(Math.random() * playlist.length)
+    const nextSong = playlist[randomIndex] as any
+    const vkeyDetail = await GET_VKEY(nextSong.mid || nextSong.songmid)
     const songUrl = vkeyDetail.response.playLists[0]
     store.currentSongUrl = songUrl
     store.currentSong = nextSong
-    store.currentSongmid = nextSong.mid
-    store.currentSongName = nextSong.name
+    store.currentSongmid = nextSong.mid || nextSong.songmid
+    store.currentSongName = nextSong.name || nextSong.songname
   }
 
   // 切换播放模式
@@ -186,7 +223,7 @@ const PlayControl: React.FC = observer(() => {
         <div className="control-content--left">
           {(() => {
             let currentSong, singers, albummid
-            if (store.playType === 'playlist') {
+            if (store.playType === 'playlist' || store.playType === 'rank') {
               currentSong = store.currentSong as PlaylistSong
               singers = currentSong?.singer
               albummid = currentSong?.album.mid
