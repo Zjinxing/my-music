@@ -5,6 +5,12 @@ export const formatSeconds = (val: number): string => {
 }
 
 /**
+ * 10 以下数字首位补零
+ * @param val
+ */
+export const formatIndex = (val: number | string) => String(val).replace(/\b\d\b/, '0$&')
+
+/**
  * 生成接口所需要的 sign，参考：https://blog.csdn.net/weixin_44159306/article/details/106292092
  */
 export const generateSign = (data: any) => {
