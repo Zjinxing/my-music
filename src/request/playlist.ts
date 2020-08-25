@@ -23,8 +23,12 @@ export const GET_VKEY = (songmid: string): Promise<MusicVkey> =>
  */
 export const GET_RANK_DETAIL = (topId: number, num: number = 100): Promise<ToplistDetail> => {
   dayjs.extend(weekOfYear)
+  // 飙升榜：topId = 26，每周四更新，
+  const week = new Date().getDay() >= 4 ? (dayjs() as any).week() : (dayjs() as any).week() - 1
   const period =
-    topId === 26 ? (dayjs() as any).week() : dayjs().subtract(12, 'h').format('YYYY-MM-DD')
+    topId === 26
+      ? `${new Date().getFullYear()}_${week}`
+      : dayjs().subtract(1, 'd').format('YYYY-MM-DD')
   console.log({ period })
   const data = {
     detail: {
