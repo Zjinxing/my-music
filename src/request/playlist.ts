@@ -26,10 +26,9 @@ export const GET_RANK_DETAIL = (topId: number, num: number = 100): Promise<Topli
   // 飙升榜：topId = 26，每周四更新，
   const week = new Date().getDay() >= 4 ? (dayjs() as any).week() : (dayjs() as any).week() - 1
   const period =
-    topId === 26
-      ? `${new Date().getFullYear()}_${week}`
-      : dayjs().subtract(1, 'd').format('YYYY-MM-DD')
-  console.log({ period })
+    topId === 62
+      ? dayjs().subtract(1, 'd').format('YYYY-MM-DD')
+      : `${new Date().getFullYear()}_${week}`
   const data = {
     detail: {
       module: 'musicToplist.ToplistInfoServer',
