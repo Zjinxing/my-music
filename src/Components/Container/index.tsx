@@ -13,6 +13,7 @@ import DownLoad from './Download'
 import PlayHistory from './PlayHistory'
 import PlayControl from './PlayControl'
 import ToplistDetail from './ToplistDetail'
+import SingerSong from './Music/components/SingerSong'
 
 interface Props {
   code: number
@@ -102,6 +103,7 @@ const Container: React.FC<Props> = observer(({ code }) => {
           <Route path="/playlist-detail/:id" component={PlaylistDetail}></Route>
           <Route path="/album-detail/:id" component={AlbumDetail}></Route>
           <Route path="/toplist-detail/:topId" component={ToplistDetail}></Route>
+          <Route path="/singer-song/:singerId" component={SingerSong}></Route>
           <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
         </div>
       ) : (
