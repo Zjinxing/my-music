@@ -20,12 +20,6 @@ const Rank: React.FC = () => {
     })()
   }, [])
 
-  const getListDetail = async (topId: number) => {
-    console.log(topId)
-    const list = await GET_RANK_DETAIL(topId)
-    console.log(list)
-  }
-
   return (
     <div>
       {code !== 0 && !list?.length ? (
@@ -63,11 +57,13 @@ const Rank: React.FC = () => {
                 <h2>{item.groupName}</h2>
                 <div className="toplist-other--items">
                   {item.toplist.map(toplist => (
-                    <ListCover
-                      imgUrl={toplist.frontPicUrl}
-                      count={toplist.listenNum}
-                      key={toplist.topId}
-                    />
+                    <NavLink to={`/toplist-detail/${toplist.topId}`} key={toplist.topId}>
+                      <ListCover
+                        imgUrl={toplist.frontPicUrl}
+                        count={toplist.listenNum}
+                        key={toplist.topId}
+                      />
+                    </NavLink>
                   ))}
                 </div>
               </div>
