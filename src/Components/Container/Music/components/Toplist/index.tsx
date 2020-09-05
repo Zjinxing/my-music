@@ -4,7 +4,6 @@ import { getToplist } from 'request/topList'
 import { ToplistGroup } from 'request/types/Toplist'
 import './index.scss'
 import ListCover from './ListCover'
-import { GET_RANK_DETAIL } from 'request/playlist'
 
 const Rank: React.FC = () => {
   const [code, setCode] = useState(-1)
