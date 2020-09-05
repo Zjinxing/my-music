@@ -103,7 +103,7 @@ const Container: React.FC<Props> = observer(({ code }) => {
           <Route path="/playlist-detail/:id" component={PlaylistDetail}></Route>
           <Route path="/album-detail/:id" component={AlbumDetail}></Route>
           <Route path="/toplist-detail/:topId" component={ToplistDetail}></Route>
-          <Route path="/singer-song/:singerId" component={SingerSong}></Route>
+          <Route path="/singer-song/:singerid" component={SingerSong}></Route>
           <Redirect path="/" to={{ pathname: '/music' }}></Redirect>
         </div>
       ) : (
