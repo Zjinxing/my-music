@@ -223,7 +223,8 @@ const PlayControl: React.FC = observer(() => {
         <div className="control-content--left">
           {(() => {
             let currentSong, singers, albummid
-            if (store.playType === 'playlist' || store.playType === 'rank') {
+            const tempArr = ['playlist', 'rank', 'singer']
+            if (tempArr.includes(store.playType)) {
               currentSong = store.currentSong as PlaylistSong
               singers = currentSong?.singer
               albummid = currentSong?.album.mid
