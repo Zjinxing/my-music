@@ -1,7 +1,7 @@
 import { uInstance } from './instance'
 import { commonConfig } from './commonConfig'
 import { generateSign } from 'common/utils'
-import { HotSingerRes } from './types/Singer'
+import { HotSingerRes, SingerDetail } from './types/Singer'
 
 export const GET_SINGERS = (args?: {
   area: number
@@ -31,3 +31,8 @@ export const GET_SINGERS = (args?: {
   const params = { ...commonConfig, sign, data }
   return uInstance.get('cgi-bin/musics.fcg', { params })
 }
+
+export const GET_SINGERSONG = (singerid: string): Promise<SingerDetail> =>
+  uInstance.get(
+    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_detail_cp.fcg?newsong=1&tpl=wk&singerid=${singerid}&g_tk=5381&platform=mac&g_tk_new_20200303=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0&platform=jqspaframe.json&needNewCode=0&ct=6&cv=10000`
+  )
