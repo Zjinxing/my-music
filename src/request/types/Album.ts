@@ -1,4 +1,5 @@
 import { SongHome } from './Recommend'
+import SingerAlbum from 'components/Container/Music/components/SingerSong/components/Album'
 
 export interface SingerBase {
   id: number
@@ -109,4 +110,43 @@ export interface NewAlbum {
       type: number
     }
   }
+}
+
+export interface SingerAlbum {
+  Fattribute_5: string
+  Ftype: string
+  albumID: string
+  albumMID: string
+  albumName: string
+  albumtype: string
+  company: string
+  desc: string
+  lan: string
+  latest_song: {
+    song_count: number
+    songid: number
+    track_name: string
+  }
+  listen_count: string
+  pubTime: string
+  score: string
+  shoufa: number
+  singerID: string
+  singerMID: string
+  singerName: string
+  singers: { singer_id: string; singer_mid: string; singer_name: string }[]
+  type: number
+}
+
+export interface SingerAlbumList {
+  code: number
+  data: {
+    list: SingerAlbum[]
+    singer_id: number
+    singer_mid: string
+    singer_name: string
+    total: number
+  }
+  message: string
+  subcode: number
 }

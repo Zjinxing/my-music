@@ -192,3 +192,13 @@ export interface SingerDetail {
   getSingerUin: boolean
   getSongInfo: []
 }
+
+export interface SimSinger extends SingerBase {
+  pic: string
+}
+export interface SimilarSinger {
+  singers: {
+    hasmore: number
+    items: SimSinger[]
+  }
+}
