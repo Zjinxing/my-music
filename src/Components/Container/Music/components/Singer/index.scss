@@ -9,73 +9,71 @@
       margin-right: 10px;
     }
   }
-  &-content {
-    .singers-list {
-      display: grid;
-      margin-top: 30px;
-      grid-template-columns: repeat(6, 16.67%);
-      @media (max-width: 1370px) {
-        grid-template-columns: repeat(5, 20%);
+}
+.singers-list {
+  display: grid;
+  margin-top: 30px;
+  grid-template-columns: repeat(6, 16.67%);
+  @media (max-width: 1370px) {
+    grid-template-columns: repeat(5, 20%);
+  }
+  @media (max-width: 1190px) {
+    grid-template-columns: repeat(4, 25%);
+  }
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px 0 0;
+    margin: 0 0 20px;
+    a {
+      width: 100%;
+      &:hover {
+        color: var(--color-primary);
       }
-      @media (max-width: 1190px) {
-        grid-template-columns: repeat(4, 25%);
-      }
-      &__item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px 20px 0 0;
-        margin: 0 0 20px;
-        a {
-          width: 100%;
-          &:hover {
-            color: var(--color-primary);
-          }
+    }
+    .singers-list__pic {
+      width: 95%;
+      border-radius: 50%;
+      margin: 0 0 18px;
+    }
+    .singers-list__name {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 400;
+      margin: 0;
+      .singers-list__number.top {
+        position: relative;
+        .icon_skin {
+          display: inline-block;
+          width: 16px;
+          height: 18px;
+          margin-right: 5px;
+          mask-image: url('../../../../../resources/icon.svg');
+          mask-position: -140px 0;
+          background-color: #1ecc94;
         }
-        .singers-list__pic {
-          width: 95%;
-          border-radius: 50%;
-          margin: 0 0 18px;
+        .txt_1,
+        .txt_2,
+        .txt_3 {
+          position: absolute;
+          top: 0;
+          left: 0;
+          mask-position: -140px 220px;
+          background-color: #fff;
         }
-        .singers-list__name {
-          display: flex;
-          align-items: center;
-          font-size: 16px;
-          font-weight: 400;
-          margin: 0;
-          .singers-list__number.top {
-            position: relative;
-            .icon_skin {
-              display: inline-block;
-              width: 16px;
-              height: 18px;
-              margin-right: 5px;
-              mask-image: url('../../../../../resources/icon.svg');
-              mask-position: -140px 0;
-              background-color: #1ecc94;
-            }
-            .txt_1,
-            .txt_2,
-            .txt_3 {
-              position: absolute;
-              top: 0;
-              left: 0;
-              mask-position: -140px 220px;
-              background-color: #fff;
-            }
-            .txt_2 {
-              mask-position: -139px 200px;
-            }
-            .txt_3 {
-              mask-position: -139px 180px;
-            }
-          }
+        .txt_2 {
+          mask-position: -139px 200px;
         }
-        .only-name {
-          width: 100%;
-          text-align: center;
+        .txt_3 {
+          mask-position: -139px 180px;
         }
       }
+    }
+    .only-name {
+      width: 100%;
+      text-align: center;
     }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {
   RouteComponentProps,
   useRouteMatch,
@@ -28,6 +28,8 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
   const [mvIds, setMvIds] = useState<number[]>([])
   const { path, url } = useRouteMatch()
 
+  const singerRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     ;(async () => {
       try {
@@ -43,8 +45,14 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
       }
     })()
   }, [props.match.params.singerid])
+
+  const scrollToTop = () => {
+    const parentEl = singerRef.current?.parentElement as HTMLDivElement
+    parentEl.scrollTop = 0
+  }
+
   return (
-    <div className="singerDetail">
+    <div ref={singerRef} className="singerDetail">
       <div className="singer-header">
         {singerMid && (
           <img
@@ -97,7 +105,12 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
       <div className="singer-content">
         <Switch>
           <Route path={`${path}/choiceness`}>
-            <SingerChoiceness mvIds={mvIds} songlist={songlist}></SingerChoiceness>
+            <SingerChoiceness
+              mvIds={mvIds}
+              songlist={songlist}
+              singerMid={singerMid}
+              scrollToTop={scrollToTop}
+            ></SingerChoiceness>
           </Route>
           <Route path={`${path}/songs`}>
             <SingerSongs songlist={songlist}></SingerSongs>
