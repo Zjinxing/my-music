@@ -72,6 +72,7 @@ const PlayControl: React.FC = observer(() => {
         playlist = store.playlistAlbum
         break
       case 'rank':
+      case 'singer':
         playlist = store.playlistRank
         break
       default:
