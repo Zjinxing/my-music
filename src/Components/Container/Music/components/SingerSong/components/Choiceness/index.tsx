@@ -17,6 +17,7 @@ interface Props {
   mvIds: number[]
   singerMid: string
   scrollToTop?: () => void
+  playSong: (song: SongHome, songlist: SongHome[]) => any
 }
 
 const SingerChoiceness: React.FC<Props> = props => {
@@ -27,6 +28,7 @@ const SingerChoiceness: React.FC<Props> = props => {
   useEffect(() => {
     ;(async () => {
       if (!props.singerMid) return
+      console.log('testIIIIIIIIIIIII', props.singerMid)
       try {
         const [singerDetail, simSingers] = await Promise.all([
           GET_SINGER_ALBUM(props.singerMid),
@@ -39,26 +41,7 @@ const SingerChoiceness: React.FC<Props> = props => {
         console.log(err)
       }
     })()
-  }, [props, props.singerMid])
-
-  const playSong = (song: SongHome) => {
-    return async () => {
-      store.playlistRank = props.songlist
-      store.playType = 'singer'
-      if (store.isPlaying && store.currentSongmid === song.mid) {
-        // 处理正在播放当前歌曲
-        store.isPlaying = false
-      } else {
-        store.currentSong = song
-        const vkeyDetail = await GET_VKEY(song.mid)
-        const songUrl = vkeyDetail.response.playLists[0]
-        store.currentSongUrl = songUrl
-        store.currentSong = song
-        store.currentSongmid = song.mid
-        store.currentSongName = song.name
-      }
-    }
-  }
+  }, [props.singerMid]) // eslint-disable-line
 
   const playAll = async () => {
     store.playlistRank = props.songlist
@@ -91,8 +74,8 @@ const SingerChoiceness: React.FC<Props> = props => {
     <div className="singer-choiceness">
       <div className="singer-choiceness__header">
         {albumlist?.slice(0, 2).map(album => (
-          <NavLink to={`/album-detail/${album.albumMID}`}>
-            <div className="singer-choiceness__header--album" key={album.albumID}>
+          <NavLink to={`/album-detail/${album.albumMID}`} key={album.albumID}>
+            <div className="singer-choiceness__header--album">
               <img
                 src={`https://y.gtimg.cn/music/photo_new/T002R800x800M000${album.albumMID}.jpg?max_age=2592000`}
                 alt=""
@@ -123,7 +106,7 @@ const SingerChoiceness: React.FC<Props> = props => {
             className={`songlist-item ${
               song.mid === store.currentSongmid && store.playType === 'singer' ? 'active-song' : ''
             }`}
-            onDoubleClick={playSong(song)}
+            onDoubleClick={props.playSong(song, props.songlist)}
           >
             <div className="songlist-item--name one-line-ellipsis">
               <span className="songlist-item--name__text one-line-ellipsis">
@@ -144,7 +127,7 @@ const SingerChoiceness: React.FC<Props> = props => {
                 )}
               </div>
               <div className="songlist-item--controls">
-                <span className="controls-icon" onClick={playSong(song)}>
+                <span className="controls-icon" onClick={props.playSong(song, props.songlist)}>
                   <img
                     src={
                       store.isPlaying &&

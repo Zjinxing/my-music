@@ -7,7 +7,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom'
-import { GET_SINGERSONG } from 'request/singer'
+import { GET_SINGER_DETAIL } from 'request/singer'
 import Button from 'components/Common/Button'
 import './index.scss'
 import SingerChoiceness from './components/Choiceness'
@@ -16,6 +16,8 @@ import SingerAlbum from './components/Album'
 import SingerVideo from './components/Video'
 import SingerDetail from './components/Detail'
 import { SongHome } from 'request/types/Recommend'
+import { useStore } from 'store'
+import { GET_VKEY } from 'request/playlist'
 
 interface RouteProps {
   singerid: string
@@ -27,13 +29,14 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
   const [songlist, setSonglist] = useState<SongHome[]>([])
   const [mvIds, setMvIds] = useState<number[]>([])
   const { path, url } = useRouteMatch()
+  const store = useStore()
 
   const singerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     ;(async () => {
       try {
-        const result = await GET_SINGERSONG(props.match.params.singerid)
+        const result = await GET_SINGER_DETAIL(props.match.params.singerid)
         console.log(result)
         const { Fsinger_mid, Fsinger_name } = result.getSingerInfo
         setSingerMid(Fsinger_mid)
@@ -49,6 +52,25 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
   const scrollToTop = () => {
     const parentEl = singerRef.current?.parentElement as HTMLDivElement
     parentEl.scrollTop = 0
+  }
+
+  const playSong = (song: SongHome, songlist: SongHome[]) => {
+    return async () => {
+      store.playlistRank = songlist
+      store.playType = 'singer'
+      if (store.isPlaying && store.currentSongmid === song.mid) {
+        // 处理正在播放当前歌曲
+        store.isPlaying = false
+      } else {
+        store.currentSong = song
+        const vkeyDetail = await GET_VKEY(song.mid)
+        const songUrl = vkeyDetail.response.playLists[0]
+        store.currentSongUrl = songUrl
+        store.currentSong = song
+        store.currentSongmid = song.mid
+        store.currentSongName = song.name
+      }
+    }
   }
 
   return (
@@ -110,10 +132,14 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
               songlist={songlist}
               singerMid={singerMid}
               scrollToTop={scrollToTop}
+              playSong={playSong}
             ></SingerChoiceness>
           </Route>
           <Route path={`${path}/songs`}>
-            <SingerSongs songlist={songlist}></SingerSongs>
+            <SingerSongs
+              playSong={playSong}
+              observerWrapper={singerRef.current?.parentElement as HTMLDivElement}
+            ></SingerSongs>
           </Route>
           <Route path={`${path}/album`} component={SingerAlbum}></Route>
           <Route path={`${path}/singer-video`} component={SingerVideo}></Route>

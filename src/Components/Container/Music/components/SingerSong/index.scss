@@ -49,4 +49,11 @@
       }
     }
   }
+
+  .play-icon {
+    vertical-align: bottom;
+    @media (prefers-color-scheme: dark) {
+      filter: invert(1);
+    }
+  }
 }
