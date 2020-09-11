@@ -9,6 +9,7 @@ import { formatSeconds } from 'common/utils'
 import { useObserver } from 'mobx-react'
 
 interface Props {
+  singermid: string
   playSong: (song: SongHome, songlist: SongHome[]) => any
   observerWrapper: HTMLDivElement
 }
@@ -26,9 +27,9 @@ const SingerSongs: React.FC<Props> = props => {
     }
   }, []) // eslint-disable-line
 
-  const getSingerSongs = async (begin: number = 0, num: number = 30) => {
+  const getSingerSongs = async (singermid: string, begin: number = 0, num: number = 30) => {
     try {
-      const res = await GET_SINGER_SONG(begin, num)
+      const res = await GET_SINGER_SONG(singermid, begin, num)
       const songs = res.data.list.map(item => (item.musicData as any) as SongHome)
       setSonglist(preSonglist => {
         const newList = [...preSonglist, ...songs]
@@ -45,7 +46,7 @@ const SingerSongs: React.FC<Props> = props => {
     const { intersectionRatio } = entry
     console.log({ intersectionRatio, entry })
     const begin = songlistRef.current.length
-    getSingerSongs(begin)
+    getSingerSongs(props.singermid, begin)
   }
 
   const observer = new IntersectionObserver(loadMoreSongs, {

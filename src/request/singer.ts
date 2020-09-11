@@ -59,7 +59,11 @@ export const GET_SIM_SINGERS = (singermid: string): Promise<SimilarSinger> =>
 /**
  * 获取歌手歌曲
  */
-export const GET_SINGER_SONG = (begin: number = 0, num: number = 30): Promise<GetSingerSong> =>
+export const GET_SINGER_SONG = (
+  singermid: string,
+  begin: number = 0,
+  num: number = 30
+): Promise<GetSingerSong> =>
   uInstance.get(
-    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg?g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&inCharset=GB2312&outCharset=utf-8&notice=0&platform=mac&needNewCode=0&singermid=00067r4p0wBDDN&order=listen&begin=${begin}&num=${num}&songstatus=1&newsong=1`
+    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg?g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&inCharset=GB2312&outCharset=utf-8&notice=0&platform=mac&needNewCode=0&singermid=${singermid}&order=listen&begin=${begin}&num=${num}&songstatus=1&newsong=1`
   )

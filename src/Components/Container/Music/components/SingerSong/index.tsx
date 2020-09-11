@@ -137,6 +137,7 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
           </Route>
           <Route path={`${path}/songs`}>
             <SingerSongs
+              singermid={singerMid}
               playSong={playSong}
               observerWrapper={singerRef.current?.parentElement as HTMLDivElement}
             ></SingerSongs>
