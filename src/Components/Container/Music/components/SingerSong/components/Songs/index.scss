@@ -1,0 +1,27 @@
+.singer-songs {
+  .songlist {
+    &-item {
+      grid-template-columns: 60% 1fr 80px;
+      column-gap: 5px;
+    }
+    &-item.active-song {
+      color: var(--color-primary);
+      .controls-icon {
+        margin-left: 13px;
+        cursor: pointer;
+        overflow: hidden;
+        .icon-inner {
+          vertical-align: middle;
+        }
+        filter: invert(0);
+        .icon-inner {
+          transform: translateY(-40px);
+          filter: drop-shadow(0 40px var(--color-primary));
+        }
+      }
+    }
+    .observer-el {
+      height: 1px;
+    }
+  }
+}
