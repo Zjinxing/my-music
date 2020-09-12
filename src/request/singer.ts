@@ -39,12 +39,20 @@ export const GET_SINGER_DETAIL = (singerid: string): Promise<SingerDetail> =>
   )
 
 /**
- * 歌手详情页获取推荐专辑
+ * 歌手详情页获取推荐专辑, order字段最热参数没查出传啥
  * @param singermid 歌手mid
+ * @param begin 开始
+ * @param num 数量
+ * @param type 分类，不传为全部，0录音室专辑，11 EP单曲，1 现场专辑
  */
-export const GET_SINGER_ALBUM = (singermid: string): Promise<SingerAlbumList> =>
+export const GET_SINGER_ALBUM = (
+  singermid: string,
+  begin: number = 0,
+  num: number = 7,
+  type?: number
+): Promise<SingerAlbumList> =>
   uInstance.get(
-    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?format=jsonp&platform=mac&singermid=${singermid}&order=time&begin=0&num=7&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0`
+    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?platform=mac&singermid=${singermid}&order=time&begin=${begin}&num=${num}&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0`
   )
 
 /**
