@@ -49,10 +49,12 @@ export const GET_SINGER_ALBUM = (
   singermid: string,
   begin: number = 0,
   num: number = 7,
-  type?: number
+  type?: string
 ): Promise<SingerAlbumList> =>
   uInstance.get(
-    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?platform=mac&singermid=${singermid}&order=time&begin=${begin}&num=${num}&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0`
+    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?platform=mac&singermid=${singermid}&order=time&begin=${begin}&num=${num}&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0${
+      type ? '&type=' + type : ''
+    }`
   )
 
 /**

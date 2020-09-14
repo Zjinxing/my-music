@@ -12,7 +12,7 @@ import Button from 'components/Common/Button'
 import './index.scss'
 import SingerChoiceness from './components/Choiceness'
 import SingerSongs from './components/Songs'
-import SingerAlbum from './components/Album'
+import SingerAlbumList from './components/Album'
 import SingerVideo from './components/Video'
 import SingerDetail from './components/Detail'
 import { SongHome } from 'request/types/Recommend'
@@ -142,7 +142,9 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
               observerWrapper={singerRef.current?.parentElement as HTMLDivElement}
             ></SingerSongs>
           </Route>
-          <Route path={`${path}/album`} component={SingerAlbum}></Route>
+          <Route path={`${path}/album`}>
+            <SingerAlbumList singermid={singerMid}></SingerAlbumList>
+          </Route>
           <Route path={`${path}/singer-video`} component={SingerVideo}></Route>
           <Route path={`${path}/detail`} component={SingerDetail}></Route>
           <Redirect path={path} to={{ pathname: `${path}/choiceness` }}></Redirect>

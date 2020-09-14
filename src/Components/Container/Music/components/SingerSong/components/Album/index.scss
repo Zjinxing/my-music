@@ -1,0 +1,32 @@
+.singer-album {
+  &-classes {
+    display: flex;
+    font-size: 12px;
+    margin: 20px auto;
+    li {
+      margin-right: 32px;
+      color: #8f8f8f;
+      cursor: pointer;
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+    li.active-album {
+      color: var(--color-primary);
+    }
+  }
+  .hot-albums-list {
+    display: grid;
+    grid-template-columns: repeat(6, 16.67%);
+    row-gap: 20px;
+    @media (max-width: 1370px) {
+      grid-template-columns: repeat(5, 20%);
+    }
+    @media (max-width: 1190px) {
+      grid-template-columns: repeat(4, 25%);
+    }
+    .cover-item {
+      width: 100%;
+    }
+  }
+}
