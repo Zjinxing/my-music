@@ -211,7 +211,7 @@ export interface GetSingerSong {
       isnew: number
       listenCount: number
       musicData: SongInfo
-      playurl: ''
+      playurl: number
       price: number
       vid: {
         Fstatus: null
@@ -224,4 +224,33 @@ export interface GetSingerSong {
   }
   message: string
   subcode: number
+}
+
+export interface Mv {
+  index: number
+  vid: number
+  id: number
+  title: number
+  desc: number
+  pic: number
+  encrypt_uin: number
+  upload_uin: number
+  upload_nick: number
+  upload_pic: number
+  score: number
+  listenCount: number
+  date: number
+  singer_id: number
+  singer_name: number
+  singer_mid: number
+}
+
+export interface SingerMv {
+  code: number
+  subcode: number
+  message: number
+  data: {
+    list: Mv[]
+    total: number
+  }
 }

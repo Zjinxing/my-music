@@ -1,7 +1,7 @@
 import { uInstance } from './instance'
 import { commonConfig } from './commonConfig'
 import { generateSign } from 'common/utils'
-import { HotSingerRes, SingerDetail, SimilarSinger, GetSingerSong } from './types/Singer'
+import { HotSingerRes, SingerDetail, SimilarSinger, GetSingerSong, SingerMv } from './types/Singer'
 import { SingerAlbumList } from './types/Album'
 
 export const GET_SINGERS = (args?: {
@@ -39,20 +39,22 @@ export const GET_SINGER_DETAIL = (singerid: string): Promise<SingerDetail> =>
   )
 
 /**
- * 歌手详情页获取推荐专辑, order字段最热参数没查出传啥
+ * 歌手详情页获取推荐专辑
  * @param singermid 歌手mid
  * @param begin 开始
  * @param num 数量
+ * @param order 排序 time 时间 listen 热度
  * @param type 分类，不传为全部，0录音室专辑，11 EP单曲，1 现场专辑
  */
 export const GET_SINGER_ALBUM = (
   singermid: string,
   begin: number = 0,
   num: number = 7,
+  order: string = 'time',
   type?: string
 ): Promise<SingerAlbumList> =>
   uInstance.get(
-    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?platform=mac&singermid=${singermid}&order=time&begin=${begin}&num=${num}&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0${
+    `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_album.fcg?platform=mac&singermid=${singermid}&order=${order}&begin=${begin}&num=${num}&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&format=json&inCharset=GB2312&outCharset=utf-8&notice=0${
       type ? '&type=' + type : ''
     }`
   )
@@ -76,4 +78,16 @@ export const GET_SINGER_SONG = (
 ): Promise<GetSingerSong> =>
   uInstance.get(
     `https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg?g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&inCharset=GB2312&outCharset=utf-8&notice=0&platform=mac&needNewCode=0&singermid=${singermid}&order=listen&begin=${begin}&num=${num}&songstatus=1&newsong=1`
+  )
+
+/**
+ * 获取歌手mv列表
+ */
+export const GET_SINGER_MV = (
+  singermid: string,
+  begin: number = 0,
+  num: number = 0
+): Promise<SingerMv> =>
+  uInstance.get(
+    `https://c.y.qq.com/mv/fcgi-bin/fcg_singer_mv.fcg?cid=205360581&singermid=${singermid}&order=listen&begin=${begin}&num=${num}&cmd=0&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&inCharset=GB2312&outCharset=utf-8&notice=0&needNewCode=0`
   )
