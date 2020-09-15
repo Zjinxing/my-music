@@ -12,6 +12,7 @@ interface Props {
 const SingerAlbumList: React.FC<Props> = props => {
   const [albumList, setAlbumList] = useState<SingerAlbum[]>()
   const [albumType, setAlbumType] = useState('')
+  const [order, setOrder] = useState('time')
   const albumTypes = [
     { label: '全部', value: '' },
     { label: '录音室专辑', value: '0' },
@@ -21,16 +22,17 @@ const SingerAlbumList: React.FC<Props> = props => {
   useEffect(() => {
     ;(async () => {
       if (props.singermid) {
-        const res = await GET_SINGER_ALBUM(props.singermid, 0, 20)
+        const res = await GET_SINGER_ALBUM(props.singermid, 0, 20, 'time')
         setAlbumList(res.data.list)
       }
     })()
   }, [props.singermid])
 
-  const getAlbums = async (type: string = '') => {
+  const getAlbums = async (type: string = '', order = 'time') => {
     setAlbumType(type)
+    setOrder(order)
     try {
-      const res = await GET_SINGER_ALBUM(props.singermid, 0, 20, type)
+      const res = await GET_SINGER_ALBUM(props.singermid, 0, 20, order, type)
       setAlbumList(res.data.list)
     } catch (err) {
       console.log(err)
@@ -38,17 +40,33 @@ const SingerAlbumList: React.FC<Props> = props => {
   }
   return useObserver(() => (
     <div className="singer-album">
-      <ul className="singer-album-classes">
-        {albumTypes.map(item => (
+      <div className="singer-album-header">
+        <ul className="singer-album-classes">
+          {albumTypes.map(item => (
+            <li
+              className={item.value === albumType ? 'active-album' : ''}
+              key={item.label}
+              onClick={() => getAlbums(item.value)}
+            >
+              {item.label}
+            </li>
+          ))}
+        </ul>
+        <ul className="singer-album-classes">
           <li
-            className={item.value === albumType ? 'active-album' : ''}
-            key={item.label}
-            onClick={() => getAlbums(item.value)}
+            className={order === 'time' ? 'active-album' : ''}
+            onClick={() => getAlbums('', 'time')}
           >
-            {item.label}
+            最新
           </li>
-        ))}
-      </ul>
+          <li
+            className={order === 'listen' ? 'active-album' : ''}
+            onClick={() => getAlbums('', 'listen')}
+          >
+            最热
+          </li>
+        </ul>
+      </div>
       <ul className="hot-albums-list">
         {albumList?.map(item => (
           <li className="newest-cover cover-item" key={item.albumMID}>
