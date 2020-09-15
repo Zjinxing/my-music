@@ -46,7 +46,7 @@ const SingerAlbumList: React.FC<Props> = props => {
             <li
               className={item.value === albumType ? 'active-album' : ''}
               key={item.label}
-              onClick={() => getAlbums(item.value)}
+              onClick={() => getAlbums(item.value, order)}
             >
               {item.label}
             </li>
@@ -55,13 +55,13 @@ const SingerAlbumList: React.FC<Props> = props => {
         <ul className="singer-album-classes">
           <li
             className={order === 'time' ? 'active-album' : ''}
-            onClick={() => getAlbums('', 'time')}
+            onClick={() => getAlbums(albumType, 'time')}
           >
             最新
           </li>
           <li
             className={order === 'listen' ? 'active-album' : ''}
-            onClick={() => getAlbums('', 'listen')}
+            onClick={() => getAlbums(albumType, 'listen')}
           >
             最热
           </li>
