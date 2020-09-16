@@ -26,6 +26,7 @@ interface RouteProps {
 const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
   const [singerMid, setSingerMid] = useState<string>('')
   const [singerName, setSingerName] = useState('')
+  const [singerBrief, setSingerBrief] = useState('')
   const [songlist, setSonglist] = useState<SongHome[]>([])
   const [mvIds, setMvIds] = useState<number[]>([])
   const { path, url } = useRouteMatch()
@@ -37,12 +38,12 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
     ;(async () => {
       try {
         const result = await GET_SINGER_DETAIL(props.match.params.singerid)
-        console.log(result)
         const { Fsinger_mid, Fsinger_name } = result.getSingerInfo
         setSingerMid(Fsinger_mid)
         setSingerName(Fsinger_name)
         setSonglist(result.getSongInfo)
         setMvIds(result.getMvids)
+        setSingerBrief(result.singerBrief.split('。')[0])
       } catch (err) {
         console.log(err)
       }
@@ -86,7 +87,7 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
         )}
         <div className="singer-intro">
           <h2>{singerName}</h2>
-          <p>这里是简介，找不到从哪获取，假装这就是简介了。。。</p>
+          <p className="one-line-ellipsis">{singerBrief}。</p>
           <p className="singer-fans">粉丝数：183.3万</p>
           <Button type="primary" className="singer-intro-btn">
             +关注
@@ -145,7 +146,9 @@ const SingerSong: React.FC<RouteComponentProps<RouteProps>> = props => {
           <Route path={`${path}/album`}>
             <SingerAlbumList singermid={singerMid}></SingerAlbumList>
           </Route>
-          <Route path={`${path}/singer-video`} component={SingerVideo}></Route>
+          <Route path={`${path}/singer-video`}>
+            <SingerVideo singermid={singerMid}></SingerVideo>
+          </Route>
           <Route path={`${path}/detail`} component={SingerDetail}></Route>
           <Redirect path={path} to={{ pathname: `${path}/choiceness` }}></Redirect>
         </Switch>

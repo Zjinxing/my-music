@@ -84,10 +84,31 @@ export const GET_SINGER_SONG = (
  * 获取歌手mv列表
  */
 export const GET_SINGER_MV = (
-  singermid: string,
-  begin: number = 0,
-  num: number = 0
-): Promise<SingerMv> =>
-  uInstance.get(
-    `https://c.y.qq.com/mv/fcgi-bin/fcg_singer_mv.fcg?cid=205360581&singermid=${singermid}&order=listen&begin=${begin}&num=${num}&cmd=0&g_tk_new_20200303=5381&g_tk=5381&loginUin=0&hostUin=0&inCharset=GB2312&outCharset=utf-8&notice=0&needNewCode=0`
-  )
+  singerMid: string,
+  order = 0,
+  page: number = 0,
+  pageSize: number = 20
+): Promise<SingerMv> => {
+  const data = {
+    req_0: {
+      module: 'music.homepage.HomepageSrv',
+      method: 'GetHomepageTabDetail',
+      param: {
+        uin: '',
+        singerMid: singerMid,
+        tabId: 'video',
+        page,
+        pageSize,
+        order,
+      },
+    },
+    comm: { g_tk: 5381, uin: 0, format: 'json', ct: 23 },
+  }
+  const sign = generateSign(data)
+  return uInstance.post('cgi-bin/musics.fcg', data, {
+    params: {
+      _: 1600174638958,
+      sign,
+    },
+  })
+}

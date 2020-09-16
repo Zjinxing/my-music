@@ -189,6 +189,7 @@ export interface SingerDetail {
   getSingerRadio: boolean
   getSingerUin: boolean
   getSongInfo: []
+  singerBrief: string
 }
 
 export interface SimSinger extends SingerBase {
@@ -227,30 +228,28 @@ export interface GetSingerSong {
 }
 
 export interface Mv {
-  index: number
-  vid: number
-  id: number
-  title: number
-  desc: number
-  pic: number
-  encrypt_uin: number
-  upload_uin: number
-  upload_nick: number
-  upload_pic: number
-  score: number
-  listenCount: number
-  date: number
-  singer_id: number
-  singer_name: number
-  singer_mid: number
+  mvid: number
+  vid: string
+  title: string
+  picurl: string
+  picformat: number
+  duration: number
+  playcnt: number
+  pubdate: number
+  type: number
 }
 
 export interface SingerMv {
   code: number
-  subcode: number
-  message: number
-  data: {
-    list: Mv[]
-    total: number
+  ts: number
+  start_ts: number
+  req_0: {
+    code: number
+    data: {
+      list: Mv[]
+      hasMore: number
+      total: number
+      prompt: { msg: string; url: string }
+    }
   }
 }

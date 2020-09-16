@@ -28,7 +28,6 @@ const SingerChoiceness: React.FC<Props> = props => {
   useEffect(() => {
     ;(async () => {
       if (!props.singerMid) return
-      console.log('testIIIIIIIIIIIII', props.singerMid)
       try {
         const [singerDetail, simSingers] = await Promise.all([
           GET_SINGER_ALBUM(props.singerMid),
