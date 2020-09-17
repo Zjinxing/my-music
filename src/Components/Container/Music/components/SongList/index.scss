@@ -34,6 +34,27 @@
     }
   }
   &-content {
+    &--title {
+      display: flex;
+      justify-content: space-between;
+      &__order {
+        display: flex;
+        text-align: right;
+        font-size: 12px;
+        margin: 20px 0;
+        li {
+          margin-right: 32px;
+          color: #8f8f8f;
+          cursor: pointer;
+          &:hover {
+            color: var(--color-primary);
+          }
+        }
+        li.active-order {
+          color: var(--color-primary);
+        }
+      }
+    }
     &-list {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -43,6 +64,21 @@
       }
       @media (min-width: 1370px) {
         grid-template-columns: repeat(6, 1fr);
+      }
+      &-item {
+        .playlist-cover--title,
+        .playlist-cover--creator {
+          display: inline-block;
+          width: 100%;
+          font-size: 13px;
+          font-weight: bold;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .playlist-cover--creator {
+          font-weight: normal;
+          color: #8f8f8f;
+        }
       }
     }
   }

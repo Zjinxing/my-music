@@ -43,12 +43,21 @@ export const GET_RANK_DETAIL = (topId: number, num: number = 100): Promise<Topli
 
 /**
  * 获取分类歌单
+ * @param {Number} order 排序 5最新，2最热，
+ * @param {Number} id 歌单id
+ * @param {Number} sin 开始位置
+ * @param {Number} size 获取条数
  */
-export const GET_PLAYLIST_BY_TAG = (): Promise<GetPlaylistByTab> => {
+export const GET_PLAYLIST_BY_TAG = (
+  order = 5,
+  id = 10000000,
+  sin = 0,
+  size = 60
+): Promise<GetPlaylistByTab> => {
   const data = {
     req_0: {
       method: 'get_playlist_by_tag',
-      param: { id: 10000000, sin: 0, size: 60, order: 5, is_parent: 0 },
+      param: { id, sin, size, order, is_parent: 0 },
       module: 'playlist.PlayListPlazaServer',
     },
     req_1: { method: 'get_category_grid', module: 'playlist.PlayListNavigateServer', param: {} },
