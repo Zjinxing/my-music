@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { Playlist } from './types/Playlist'
+import { Playlist, GetPlaylistByTab } from './types/Playlist'
 import { lInstance, uInstance } from './instance'
 import { MusicVkey } from './types/MusicVkey'
 import { generateSign } from 'common/utils'
@@ -39,4 +39,21 @@ export const GET_RANK_DETAIL = (topId: number, num: number = 100): Promise<Topli
   }
   const sign = generateSign(data)
   return uInstance.get('cgi-bin/musics.fcg', { params: { ...commonConfig, '-': '', sign, data } })
+}
+
+/**
+ * 获取分类歌单
+ */
+export const GET_PLAYLIST_BY_TAG = (): Promise<GetPlaylistByTab> => {
+  const data = {
+    req_0: {
+      method: 'get_playlist_by_tag',
+      param: { id: 10000000, sin: 0, size: 60, order: 5, is_parent: 0 },
+      module: 'playlist.PlayListPlazaServer',
+    },
+    req_1: { method: 'get_category_grid', module: 'playlist.PlayListNavigateServer', param: {} },
+    comm: { g_tk: 5381, uin: 0, format: 'json', ct: 6, cv: 1770, platform: 'wk_v17' },
+  }
+  const sign = generateSign(data)
+  return uInstance.post('cgi-bin/musics.fcg', data, { params: { _: Date.now(), sign } })
 }

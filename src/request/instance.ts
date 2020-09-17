@@ -12,7 +12,7 @@ export class Instance {
     })
     this.instance.interceptors.request.use((config: AxiosRequestConfig) => {
       if (config.method === 'GET') {
-        config.paramsSerializer = (params) =>
+        config.paramsSerializer = params =>
           qs.stringify(params, {
             arrayFormat: 'repeat',
           })

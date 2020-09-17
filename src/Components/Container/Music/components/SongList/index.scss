@@ -1,0 +1,36 @@
+.playlist {
+  &-tabs {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-size: 13px;
+    row-gap: 10px;
+    margin-left: -10px;
+    @media (min-width: 1190px) {
+      grid-template-columns: repeat(7, 1fr);
+      .playlist-tabs-item:nth-last-child(-n + 3) {
+        display: none;
+      }
+    }
+    @media (max-width: 1190px) {
+      .playlist-tabs-item:nth-last-child(-n + 5) {
+        display: none;
+      }
+    }
+    .playlist-tabs-item:last-child {
+      display: unset;
+    }
+    &-item {
+      text-align: center;
+      background: #303031;
+      border-radius: 5px;
+      height: 32px;
+      line-height: 32px;
+      margin-left: 10px;
+      cursor: pointer;
+      &:hover {
+        background: #3b3b3c;
+        color: var(--color-primary);
+      }
+    }
+  }
+}
