@@ -34,6 +34,8 @@ export const useStore = () => {
 
 ### 2. index.tsx
 
+通过 `StoreProvider` 包裹根组件，提供全局状态
+
 ```tsx
 // index.tsx
 import React from 'react'
@@ -49,6 +51,8 @@ ReactDOM.render(
 ```
 
 ### 3 在组件中使用
+
+在需要使用全局状态的组件中引入 `useStore` ，通过 `useStore()` 获取到全局变量，通过 `useObserver` 函数包裹组件的返回值，即可实现UI相应数据的更新。
 
 ```tsx
 //MyComponents.tsx
