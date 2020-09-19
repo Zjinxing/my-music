@@ -5,7 +5,7 @@ import React, { useState, MouseEvent, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { SongHome } from 'request/types/Recommend'
 import './index.scss'
-import { GET_ALBUMINFO } from 'request/album'
+import { GET_ALBUM_DETAIL } from 'request/album'
 import { useStore } from 'store'
 import { GET_VKEY } from 'request/playlist'
 import { GET_NEW_LIST, Area } from 'request/recommand'
@@ -65,13 +65,12 @@ const Newest: React.FC<Props> = props => {
 
   const playAlbumlist = async (e: MouseEvent, id: string) => {
     e.preventDefault()
-    const result = await GET_ALBUMINFO(id)
-    console.log({ result })
+    const result = await GET_ALBUM_DETAIL(id)
     store.playType = 'album'
-    store.playlistAlbum = result.response.data.list
+    store.playlistAlbum = result.req_2.data.songList.map(item => item.songInfo)
     store.currentSong = store.playlistAlbum[0]
-    store.currentSongmid = store.currentSong.songmid
-    store.currentSongName = store.currentSong.songname
+    store.currentSongmid = store.currentSong.mid
+    store.currentSongName = store.currentSong.name
     const vkeyDetail = await GET_VKEY(store.currentSongmid)
     const songUrl = vkeyDetail.response.playLists[0]
     store.currentSongUrl = songUrl

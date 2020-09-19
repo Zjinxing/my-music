@@ -3,12 +3,13 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Tabs } from 'antd'
 import { observer } from 'mobx-react'
 import { useStore } from 'store'
-import { AlbumInfo, AlbumSongDetail } from 'request/types/Album'
-import { GET_ALBUMINFO } from 'request/album'
+import { GetAlbumDetail } from 'request/types/Album'
+import { GET_ALBUM_DETAIL } from 'request/album'
 import './index.scss'
 import Button from '../Button'
 import { formatSeconds } from 'common/utils'
 import { GET_VKEY } from 'request/playlist'
+import { SongHome } from 'request/types/Recommend'
 
 interface RouteProps {
   id: string
@@ -16,34 +17,36 @@ interface RouteProps {
 
 const AlbumDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props => {
   const store = useStore()
-  const [albumInfo, setAlbumInfo] = useState<AlbumInfo>()
+  const [albumInfo, setAlbumInfo] = useState<GetAlbumDetail>()
+  const [albumSonglist, setAlbumSonglist] = useState<SongHome[]>([])
 
   const { TabPane } = Tabs
 
   useEffect(() => {
     ;(async () => {
       const albummid = props.match.params.id
-      const albumDetail = await GET_ALBUMINFO(albummid)
+      const albumDetail = await GET_ALBUM_DETAIL(albummid)
+      const songlist = albumDetail.req_2.data.songList.map(item => item.songInfo)
       setAlbumInfo(albumDetail)
-      console.log(albumDetail)
+      setAlbumSonglist(songlist)
     })()
   }, [props.match.params.id])
 
-  const playSong = (song: AlbumSongDetail) => {
+  const playSong = (song: SongHome) => {
     return async () => {
-      store.playlistAlbum = albumInfo!.response.data.list
+      store.playlistAlbum = albumSonglist
       store.playType = 'album'
-      if (store.isPlaying && store.currentSongmid === song.songmid) {
+      if (store.isPlaying && store.currentSongmid === song.mid) {
         // 处理正在播放当前歌曲
         store.isPlaying = false
       } else {
         store.currentSong = song
-        const vkeyDetail = await GET_VKEY(song.songmid)
+        const vkeyDetail = await GET_VKEY(song.mid)
         const songUrl = vkeyDetail.response.playLists[0]
         store.currentSongUrl = songUrl
         store.currentSong = song
-        store.currentSongmid = song.songmid
-        store.currentSongName = song.songname
+        store.currentSongmid = song.mid
+        store.currentSongName = song.name
       }
     }
   }
@@ -58,11 +61,13 @@ const AlbumDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props =>
           className="playlist-header--logo"
         />
         <div className="header-detail">
-          <h1>{albumInfo?.response.data.name}</h1>
+          <h1>{albumInfo?.req_1.data.basicInfo.albumName}</h1>
           <p className="header-info">
-            <span className="singer-name">{albumInfo?.response.data.singername}</span>
-            <span className="album-aDate">{albumInfo?.response.data.aDate}</span>
-            <span className="album-genre">{albumInfo?.response.data.genre}</span>
+            <span className="singer-name">
+              {albumInfo?.req_1.data.singer.singerList.map(singer => singer.name).join(' / ')}
+            </span>
+            <span className="album-aDate">{albumInfo?.req_1.data.basicInfo.publishDate}</span>
+            <span className="album-genre">{albumInfo?.req_1.data.basicInfo.genre}</span>
           </p>
           <div className="header-controls">
             <Button type="primary" className="header-controls-btn">
@@ -81,28 +86,28 @@ const AlbumDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props =>
       </div>
       <div className="playlist-content">
         <Tabs defaultActiveKey="song">
-          <TabPane tab={`歌曲${albumInfo?.response.data.list.length || ''}`} key="song">
+          <TabPane tab={`歌曲${albumInfo?.req_2.data.totalNum || ''}`} key="song">
             <ul className="songlist">
               <li className="songlist-item list-header">
                 <span>歌曲</span>
                 <span>歌手</span>
                 <span>时长</span>
               </li>
-              {albumInfo?.response.data.list.map(song => (
-                <li className="songlist-item" key={song.songmid}>
+              {albumSonglist.map(song => (
+                <li className="songlist-item" key={song.mid}>
                   <div className="songlist-item--name one-line-ellipsis">
                     <span className="songlist-item--name__text one-line-ellipsis">
                       <span className="icon-wrapper"></span>
-                      {song.songname}
+                      {song.name}
                     </span>
                     <div className="songlist-item--icons">
-                      {song.pay.payplay ? (
+                      {song.pay.pay_play ? (
                         <img src={require('common/Enum').imgList.listVIPICon} alt="" />
                       ) : null}
-                      {song.sizeape || song.sizeflac ? (
+                      {song.file.size_ape || song.file.size_flac ? (
                         <img src={require('common/Enum').imgList.listSQICon} alt="" />
                       ) : null}
-                      {song.vid ? (
+                      {song.mv.id ? (
                         <img
                           src={require('common/Enum').imgList.listMVICon}
                           className="mv-icon"
@@ -116,7 +121,7 @@ const AlbumDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props =>
                       <span className="controls-icon" onClick={playSong(song)}>
                         <img
                           src={
-                            store.isPlaying && store.currentSongmid === song.songmid
+                            store.isPlaying && store.currentSongmid === song.mid
                               ? require('common/Enum').imgList.rvPause
                               : require('common/Enum').imgList.rv_play
                           }

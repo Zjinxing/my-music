@@ -9,7 +9,7 @@ import { useObserver } from 'mobx-react'
 import { GET_SINGER_ALBUM, GET_SIM_SINGERS } from 'request/singer'
 import { SingerAlbum } from 'request/types/Album'
 import { NavLink } from 'react-router-dom'
-import { GET_ALBUMINFO } from 'request/album'
+import { GET_ALBUM_DETAIL } from 'request/album'
 import { SimSinger } from 'request/types/Singer'
 
 interface Props {
@@ -56,13 +56,13 @@ const SingerChoiceness: React.FC<Props> = props => {
 
   const playAlbumlist = async (e: MouseEvent, id: string) => {
     e.preventDefault()
-    const result = await GET_ALBUMINFO(id)
+    const result = await GET_ALBUM_DETAIL(id)
     console.log({ result })
     store.playType = 'album'
-    store.playlistAlbum = result.response.data.list
+    store.playlistAlbum = result.req_2.data.songList.map(item => item.songInfo)
     store.currentSong = store.playlistAlbum[0]
-    store.currentSongmid = store.currentSong.songmid
-    store.currentSongName = store.currentSong.songname
+    store.currentSongmid = store.currentSong.mid
+    store.currentSongName = store.currentSong.name
     const vkeyDetail = await GET_VKEY(store.currentSongmid)
     const songUrl = vkeyDetail.response.playLists[0]
     store.currentSongUrl = songUrl

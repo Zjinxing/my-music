@@ -54,43 +54,6 @@ export interface AlbumSongDetail {
   vid: string
 }
 
-export interface AlbumInfo {
-  response: {
-    code: number
-    message: string
-    subcode: number
-    data: {
-      aDate: string
-      albumTips: string
-      color: number
-      company: string
-      company_new: {
-        brief: string
-        headPic: string
-        id: number
-        is_show: number
-        name: string
-      }
-      cur_song_num: number
-      desc: string
-      genre: string
-      id: number
-      lan: string
-      list: AlbumSongDetail[]
-      mid: string
-      name: string
-      radio_anchor: number
-      singerid: number
-      singermblog: string
-      singermid: string
-      singername: string
-      song_begin: number
-      total: number
-      total_song_num: number
-    }
-  }
-}
-
 export interface NewAlbum {
   code: number
   ts: number
@@ -149,4 +112,123 @@ export interface SingerAlbumList {
   }
   message: string
   subcode: number
+}
+
+/* start new interface */
+
+export interface AlbumInfo {
+  albumID: number
+  albumMid: string
+  albumName: string
+  albumTranName: string
+  pmid: string
+  publishDate: string
+  singerName: string
+}
+
+export interface AlbumSinger {
+  instrument: string
+  mid: string
+  name: string
+  pmid: string
+  role: string
+  singerID: number
+  singerType: number
+  transName: string
+  type: number
+}
+
+export interface AlbumSong {
+  listenCount: number
+  songInfo: SongHome
+  uploadTime: string
+}
+export interface GetAlbumDetail {
+  code: number
+  req_0: {
+    code: number
+    data: {
+      title: string
+      albumList: AlbumInfo[]
+    }
+  }
+  req_1: {
+    code: number
+    data: {
+      basicInfo: {
+        albumID: number
+        albumMid: string
+        albumName: string
+        albumTag3: number
+        albumType: string
+        color: number
+        desc: string
+        genre: string
+        genreURL: string
+        lanURL: string
+        language: string
+        modifyTime: number
+        pmid: string
+        publishDate: string
+        recordNum: string
+        tranName: string
+        type: number
+      }
+      company: {
+        ID: number
+        brief: string
+        headPic: string
+        isShow: number
+        name: string
+      }
+      singer: {
+        singerList: AlbumSinger[]
+      }
+    }
+  }
+  req_2: {
+    code: number
+    data: {
+      albumMid: string
+      albumTips: string
+      classicList: []
+      songList: AlbumSong[]
+      sort: number
+      totalNum: number
+    }
+  }
+  req_3: {
+    code: number
+    [key: string]: any
+  }
+  req_4: {
+    code: number
+    data: {
+      albumShelf: string
+      banner: {
+        title: string
+        buyPage: string
+        buytips: string
+        buyurl: string
+        id: number
+        price: number
+        buyJumpType: number
+        type: number
+        urlKey: string
+      }
+      bannerTitle: string
+      bannerType: number
+      buy: number
+      buyTips: string
+      buypage: string
+      buyurl: string
+      cdCnt: number
+      certificateFrame: number
+      certificateJumpURL: string
+      certificateLevelURL: string
+      orderid: number
+      ordertype: number
+      price: number
+    }
+  }
 }

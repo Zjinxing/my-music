@@ -12,7 +12,7 @@ import { formatSeconds } from 'common/utils'
 import { GET_VKEY } from 'request/playlist'
 import { PlaylistSong } from 'request/types/Playlist'
 import VolumeControl from './VolumeControl'
-import { AlbumSongDetail } from 'request/types/Album'
+import { SongHome } from 'request/types/Recommend'
 
 const PlayControl: React.FC = observer(() => {
   const store = useStore()
@@ -141,8 +141,8 @@ const PlayControl: React.FC = observer(() => {
       }
       let mid, songName
       if (store.playType === 'album') {
-        mid = (preSong as AlbumSongDetail).songmid
-        songName = (preSong as AlbumSongDetail).songname
+        mid = (preSong as SongHome).mid
+        songName = (preSong as SongHome).name
       } else {
         mid = (preSong as PlaylistSong).mid
         songName = (preSong as PlaylistSong).name
@@ -230,9 +230,9 @@ const PlayControl: React.FC = observer(() => {
               singers = currentSong?.singer
               albummid = currentSong?.album.mid
             } else if (store.playType === 'album') {
-              currentSong = store.currentSong as AlbumSongDetail
+              currentSong = store.currentSong as SongHome
               singers = currentSong?.singer
-              albummid = currentSong?.albummid
+              albummid = currentSong?.album.mid
             }
             return (
               <>
