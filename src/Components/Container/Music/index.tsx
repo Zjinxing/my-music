@@ -12,9 +12,9 @@ const Music: React.FC = () => {
   const { path, url } = useRouteMatch()
   return (
     <div className="music">
-      <h1>音乐馆</h1>
-      <nav>
-        <ul className="music-nav">
+      <h1 className="music-title">音乐馆</h1>
+      <nav className="music-nav">
+        <ul className="music-nav-list">
           <li>
             <NavLink to={`${url}/choiceness`}>精选</NavLink>
           </li>
