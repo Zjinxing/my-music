@@ -7,3 +7,16 @@
 a {
   color: inherit;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d3d3d3;
+  border-radius: 4px;
+  @media (prefers-color-scheme: dark) {
+    background: #4b4b4c;
+  }
+}
