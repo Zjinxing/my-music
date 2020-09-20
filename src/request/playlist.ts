@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { Playlist, GetPlaylistByTab } from './types/Playlist'
+import { GetPlaylistByTab, GetPlaylistDetail } from './types/Playlist'
 import { lInstance, uInstance } from './instance'
 import { MusicVkey } from './types/MusicVkey'
 import { generateSign } from 'common/utils'
@@ -8,8 +8,19 @@ import { ToplistDetail } from './types/Toplist'
 
 const weekOfYear = require('dayjs/plugin/weekOfYear')
 
-export const GET_LIST_DETAIL = (disstid: string): Promise<Playlist> =>
-  lInstance.get('getSongListDetail', { params: { disstid } })
+export const GET_LIST_DETAIL = async (disstid: string): Promise<GetPlaylistDetail> => {
+  const data = {
+    req_0: {
+      module: 'srf_diss_info.DissInfoServer',
+      method: 'CgiGetDiss',
+      param: { disstid: Number(disstid), userinfo: 1, tag: 1 },
+    },
+    comm: { g_tk: 359249670, uin: 0, format: 'json', ct: 6, cv: 1770, platform: 'wk_v17' },
+  }
+  const sign = generateSign(data)
+  const _ = Date.now()
+  return uInstance.post('cgi-bin/musics.fcg', data, { params: { _, sign } })
+}
 
 /**
  * 获取 vkey

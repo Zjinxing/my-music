@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, session } = require('electron')
 
 const path = require('path')
 
@@ -24,6 +24,16 @@ function createWindow() {
   win.loadURL(URL)
   win.webContents.openDevTools()
   win.on('closed', () => (win = null))
+
+  // 伪造请求头，部分接口有限制，会报 invalid referer 错误
+  const filter = {
+    urls: ['https://u.y.qq.com/*'],
+  }
+  session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
+    details.requestHeaders['Referer'] = 'https://y.qq.com/wk_v17/'
+    details.requestHeaders['Origin'] = 'https://y.qq.com'
+    callback({ requestHeaders: details.requestHeaders })
+  })
 }
 
 ipcMain.on('maximize', () => {

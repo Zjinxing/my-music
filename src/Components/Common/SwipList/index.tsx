@@ -27,8 +27,8 @@ const Playlist: React.FC<PlaylistProps> = observer(props => {
   const playSonglist = async (e: MouseEvent, id: number) => {
     e.preventDefault()
     if (!store.isPlaying) {
-      const list = await GET_LIST_DETAIL(String(id))
-      const { songlist } = list.response.cdlist[0]
+      const detail = await GET_LIST_DETAIL(String(id))
+      const { songlist } = detail.req_0.data
       store.playType = 'playlist'
       store.playlist = songlist
       store.currentPlaylistId = id

@@ -144,8 +144,8 @@ const PlayControl: React.FC = observer(() => {
         mid = (preSong as SongHome).mid
         songName = (preSong as SongHome).name
       } else {
-        mid = (preSong as PlaylistSong).mid
-        songName = (preSong as PlaylistSong).name
+        mid = (preSong as SongHome).mid
+        songName = (preSong as SongHome).name
       }
       const vkeyDetail = await GET_VKEY(mid)
       const songUrl = vkeyDetail.response.playLists[0]

@@ -14,7 +14,7 @@ export interface State {
   currentPlaylistId: number // 当前播放列表 id
   currentSong: PlaylistSong | SongHome | null // 当前播放歌曲
   playType: 'playlist' | 'singer' | 'album' | 'rank' // 播放列表类型：歌单，歌手，专辑，排行榜
-  playlist: PlaylistSong[] // 当前播放列表详情 - 播放歌单
+  playlist: SongHome[] // 当前播放列表详情 - 播放歌单
   playlistRank: SongHome[] // 当前播放列表 - 排行列表
   playlistAlbum: SongHome[] // 当前播放列表详情 - 播放专辑
   albumList: AlbumDetail[] // 首页新专辑

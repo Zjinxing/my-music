@@ -1,3 +1,5 @@
+import { SongHome } from './Recommend'
+
 export interface SongDetailCommon {
   id: number
   type: number
@@ -207,6 +209,93 @@ export interface Playlist {
     realcdnum: number
   }
 }
+
+/* 排行榜 begin */
+export interface GetPlaylistDetail {
+  code: number
+  req_0: {
+    code: number
+    data: {
+      accessed_byfav: number
+      accessed_plaza_cache: number
+      adTitle: string
+      adUrl: string
+      ad_list: []
+      cmtURL_bykey: { url_key: string; url_params: string }
+      code: number
+      ct: number
+      cv: number
+      dirinfo: {
+        ai_uin: number
+        creator: {
+          ai_uin: number
+          encrypt_ai_uin: string
+          encrypt_uin: string
+          headurl: string
+          ifpicurl: string
+          isVip: number
+          musicid: number
+          nick: string
+          singerid: number
+          type: number
+        }
+        ctime: number
+        desc: string
+        dir_show: number
+        dirid: number
+        dirtype: number
+        disstype: number
+        dv2: number
+        edge_mark: string
+        encrypt_ai_uin: string
+        encrypt_uin: string
+        headurl: string
+        host_nick: string
+        host_uin: number
+        id: number
+        listennum: number
+        mtime: number
+        ordernum: number
+        ordertime: number
+        owndir: number
+        picid: number
+        picmid: string
+        picurl: string
+        picurl2: string
+        show: number
+        song_update_num: number
+        song_update_time: number
+        songnum: number
+        status: number
+        tag: { id: number; name: string }[]
+        title: string
+        vec_tagid: number[]
+        vec_tagname: []
+      }
+      encrypt_login: string
+      filter_song_num: number
+      filtered_song: []
+      from_gedan_plaza: number
+      invalid_song: []
+      ip: string
+      isAd: number
+      login_uin: number
+      msg: string
+      namedflag: number
+      optype: number
+      orderlist: []
+      referer: string
+      songlist: SongHome[]
+      songlist_size: number
+      srf_ip: string
+      subcode: number
+      total_song_num: number
+    }
+  }
+  start_ts: number
+  ts: number
+}
+/* 排行榜 end */
 
 export interface Vplaylist {
   access_num: number
