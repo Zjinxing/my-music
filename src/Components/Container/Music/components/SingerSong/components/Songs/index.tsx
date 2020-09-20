@@ -43,10 +43,11 @@ const SingerSongs: React.FC<Props> = props => {
 
   const loadMoreSongs = (entries: IntersectionObserverEntry[]) => {
     const [entry] = entries
-    const { intersectionRatio } = entry
-    console.log({ intersectionRatio, entry })
-    const begin = songlistRef.current.length
-    getSingerSongs(props.singermid, begin)
+    const { intersectionRect } = entry
+    if (intersectionRect.width * intersectionRect.height > 0) {
+      const begin = songlistRef.current.length
+      getSingerSongs(props.singermid, begin)
+    }
   }
 
   const observer = new IntersectionObserver(loadMoreSongs, {
@@ -74,9 +75,8 @@ const SingerSongs: React.FC<Props> = props => {
         {songlist?.map(song => (
           <li
             key={song.id}
-            className={`songlist-item ${
-              song.mid === store.currentSongmid && store.playType === 'singer' ? 'active-song' : ''
-            }`}
+            className={`songlist-item ${song.mid === store.currentSongmid && store.playType === 'singer' ? 'active-song' : ''
+              }`}
             onDoubleClick={props.playSong(song, songlist)}
           >
             <div className="songlist-item--name one-line-ellipsis">
@@ -94,8 +94,8 @@ const SingerSongs: React.FC<Props> = props => {
                 {song.mv.id ? (
                   <img src={require('common/Enum').imgList.listMVICon} className="mv-icon" alt="" />
                 ) : (
-                  ''
-                )}
+                    ''
+                  )}
               </div>
               <div className="songlist-item--controls">
                 <span
@@ -108,8 +108,8 @@ const SingerSongs: React.FC<Props> = props => {
                   <img
                     src={
                       store.isPlaying &&
-                      store.currentSongmid === song.mid &&
-                      store.playType === 'singer'
+                        store.currentSongmid === song.mid &&
+                        store.playType === 'singer'
                         ? require('common/Enum').imgList.rvPause
                         : require('common/Enum').imgList.rv_play
                     }
