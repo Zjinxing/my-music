@@ -55,7 +55,7 @@
     "typescript": "^3.9.3"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev concurrently \"yarn start\" \"node server/app.js\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "cross-env NODE_ENV=dev concurrently \"yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "rescripts start",
     "build": "rescripts build",
     "test": "rescripts test",
