@@ -114,7 +114,7 @@ const PlayControl: React.FC = observer(() => {
         nextSong = playlist[currentIndex + 1]
       }
       const vkeyDetail = await GET_VKEY(nextSong.mid || nextSong.songmid)
-      const songUrl = vkeyDetail.response.playLists[0]
+      const songUrl = vkeyDetail.playLists[0]
       store.currentSongUrl = songUrl
       store.currentSong = nextSong
       store.currentSongmid = nextSong.mid || nextSong.songmid
@@ -148,7 +148,7 @@ const PlayControl: React.FC = observer(() => {
         songName = (preSong as SongHome).name
       }
       const vkeyDetail = await GET_VKEY(mid)
-      const songUrl = vkeyDetail.response.playLists[0]
+      const songUrl = vkeyDetail.playLists[0]
       store.currentSongUrl = songUrl
       store.currentSong = preSong
       store.currentSongmid = mid
@@ -166,7 +166,7 @@ const PlayControl: React.FC = observer(() => {
     const randomIndex = ~~(Math.random() * playlist.length)
     const nextSong = playlist[randomIndex] as any
     const vkeyDetail = await GET_VKEY(nextSong.mid || nextSong.songmid)
-    const songUrl = vkeyDetail.response.playLists[0]
+    const songUrl = vkeyDetail.playLists[0]
     store.currentSongUrl = songUrl
     store.currentSong = nextSong
     store.currentSongmid = nextSong.mid || nextSong.songmid

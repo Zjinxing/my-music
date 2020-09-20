@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { GetPlaylistByTab, GetPlaylistDetail } from './types/Playlist'
-import { lInstance, uInstance } from './instance'
+import { uInstance } from './instance'
 import { MusicVkey } from './types/MusicVkey'
 import { generateSign } from 'common/utils'
 import { commonConfig } from './commonConfig'
@@ -26,8 +26,35 @@ export const GET_LIST_DETAIL = async (disstid: string): Promise<GetPlaylistDetai
  * 获取 vkey
  * @param songmid 歌曲mid
  */
-export const GET_VKEY = (songmid: string): Promise<MusicVkey> =>
-  lInstance.get('getMusicVkey', { params: { songmid } })
+export const GET_VKEY = async (songmid: string): Promise<MusicVkey> => {
+  const data = {
+    req: {
+      module: 'CDN.SrfCdnDispatchServer',
+      method: 'GetCdnDispatch',
+      param: { guid: '1730490035', calltype: 0, userip: '' },
+    },
+    req_0: {
+      module: 'vkey.GetVkeyServer',
+      method: 'CgiGetVkey',
+      param: {
+        guid: '1730490035',
+        songmid: [songmid],
+        songtype: [0],
+        uin: '',
+        loginflag: 1,
+        platform: '20',
+      },
+    },
+    comm: { format: 'json', ct: 24, cv: 0 },
+  }
+  const sign = generateSign(data)
+  const _ = Date.now()
+  const result: MusicVkey = await uInstance.get('cgi-bin/musics.fcg', {
+    params: { _, sign, format: 'json', ...commonConfig, data },
+  })
+  result.playLists = result.req_0.data.sip.map(url => url + result.req_0.data.midurlinfo[0].purl)
+  return result
+}
 
 /**
  * 获取排行榜详情

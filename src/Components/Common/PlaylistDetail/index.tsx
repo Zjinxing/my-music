@@ -36,7 +36,7 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props
     store.playlist = listDetail.req_0.data.songlist
     const currentSong = store.playlist[0]
     const vkeyDetail = await GET_VKEY(currentSong.mid)
-    const songUrl = vkeyDetail.response.playLists[0]
+    const songUrl = vkeyDetail.playLists[0]
     store.currentSongUrl = songUrl
     store.currentSong = currentSong
     store.currentSongmid = currentSong.mid
@@ -53,7 +53,7 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props
       } else {
         store.currentSong = song
         const vkeyDetail = await GET_VKEY(song.mid)
-        const songUrl = vkeyDetail.response.playLists[0]
+        const songUrl = vkeyDetail.playLists[0]
         store.currentSongUrl = songUrl
         store.currentSong = song
         store.currentSongmid = song.mid
@@ -118,7 +118,7 @@ const PlaylistDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props
                   <div className="songlist-item--name one-line-ellipsis">
                     <span className="songlist-item--name__text one-line-ellipsis">
                       <span className="icon-wrapper"></span>
-                      {song.name}
+                      {song.title}
                     </span>
                     <div className="songlist-item--icons">
                       {song.pay.pay_play ? (

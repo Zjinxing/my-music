@@ -41,7 +41,7 @@ const ToplistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
       } else {
         store.currentSong = song
         const vkeyDetail = await GET_VKEY(song.mid)
-        const songUrl = vkeyDetail.response.playLists[0]
+        const songUrl = vkeyDetail.playLists[0]
         store.currentSongUrl = songUrl
         store.currentSong = song
         store.currentSongmid = song.mid
@@ -97,7 +97,7 @@ const ToplistDetail: React.FC<RouteComponentProps<RouteProps>> = props => {
                 <span className="songlist-item--name__text one-line-ellipsis">
                   <span>{formatIndex(idx + 1)}</span>
                   <span className="icon-wrapper"></span>
-                  {song.name}
+                  {song.title}
                 </span>
                 <div className="songlist-item--icons">
                   {song.pay.pay_play ? (

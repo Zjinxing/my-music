@@ -32,7 +32,5 @@ export class Instance {
 }
 
 const uBaseUrl = 'https://u.y.qq.com/'
-const localURL = 'http://localhost:3200/'
 
 export const uInstance = new Instance(uBaseUrl).instance
-export const lInstance = new Instance(localURL).instance

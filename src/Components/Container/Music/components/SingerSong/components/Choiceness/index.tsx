@@ -47,7 +47,7 @@ const SingerChoiceness: React.FC<Props> = props => {
     store.playType = 'singer'
     store.currentSong = props.songlist[0]
     const vkeyDetail = await GET_VKEY(props.songlist[0].mid)
-    const songUrl = vkeyDetail.response.playLists[0]
+    const songUrl = vkeyDetail.playLists[0]
     store.currentSongUrl = songUrl
     store.currentSong = props.songlist[0]
     store.currentSongmid = props.songlist[0].mid
@@ -64,7 +64,7 @@ const SingerChoiceness: React.FC<Props> = props => {
     store.currentSongmid = store.currentSong.mid
     store.currentSongName = store.currentSong.name
     const vkeyDetail = await GET_VKEY(store.currentSongmid)
-    const songUrl = vkeyDetail.response.playLists[0]
+    const songUrl = vkeyDetail.playLists[0]
     store.currentSongUrl = songUrl
     store.isPlaying = true
   }

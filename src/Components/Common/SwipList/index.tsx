@@ -34,7 +34,7 @@ const Playlist: React.FC<PlaylistProps> = observer(props => {
       store.currentPlaylistId = id
       store.currentSongmid = songlist[0].mid
       const vkeyDetail = await GET_VKEY(songlist[0].mid)
-      const songUrl = vkeyDetail.response.playLists[0]
+      const songUrl = vkeyDetail.playLists[0]
       store.currentSongUrl = songUrl
       store.isPlaying = true
       store.currentSong = songlist[0]

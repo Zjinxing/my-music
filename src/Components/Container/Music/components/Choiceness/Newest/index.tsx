@@ -72,7 +72,7 @@ const Newest: React.FC<Props> = props => {
     store.currentSongmid = store.currentSong.mid
     store.currentSongName = store.currentSong.name
     const vkeyDetail = await GET_VKEY(store.currentSongmid)
-    const songUrl = vkeyDetail.response.playLists[0]
+    const songUrl = vkeyDetail.playLists[0]
     store.currentSongUrl = songUrl
     store.isPlaying = true
   }

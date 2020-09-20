@@ -42,7 +42,7 @@ const AlbumDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props =>
       } else {
         store.currentSong = song
         const vkeyDetail = await GET_VKEY(song.mid)
-        const songUrl = vkeyDetail.response.playLists[0]
+        const songUrl = vkeyDetail.playLists[0]
         store.currentSongUrl = songUrl
         store.currentSong = song
         store.currentSongmid = song.mid
