@@ -1,0 +1,46 @@
+.album {
+  width: 100%;
+  &-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin-left: -20px;
+    &-item {
+      margin-left: 20px;
+    }
+    @media (max-width: 1370px) {
+      grid-template-columns: repeat(5, 1fr);
+      .album-list-item{
+        &:last-child{
+          display: none;
+        }
+      }
+    }
+    @media (max-width: 1190px) {
+      grid-template-columns: repeat(4, 25%);
+      .album-list-item {
+        &:nth-last-child(-n + 2) {
+          display: none;
+        }
+      }
+    }
+    &-nav {
+      display: inline-grid;
+      width: 100%;
+      row-gap: 7px;
+      .album-list--cover {
+        border-radius: 10px;
+        transition: all .2s;
+        &:hover{
+          transform: translateY(-10px);
+        }
+      }
+      .album--name {
+        width: 100%;
+      }
+      .album--singer, .album--price {
+        font-size: 12.5px;
+        color: #8f8f8f;
+      }
+    }
+  }
+}

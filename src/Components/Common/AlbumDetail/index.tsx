@@ -159,7 +159,9 @@ const AlbumDetail: React.FC<RouteComponentProps<RouteProps>> = observer(props =>
                 </li>
               ))}
             </ul>
+            {/* TODO: 其他专辑 */}
           </TabPane>
+          {/* TODO: 专辑信息 评论 */}
         </Tabs>
       </div>
     </div>

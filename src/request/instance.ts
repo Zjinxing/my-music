@@ -32,5 +32,7 @@ export class Instance {
 }
 
 const uBaseUrl = 'https://u.y.qq.com/'
+const cBaseUrl = 'https://c.y.qq.com/'
 
 export const uInstance = new Instance(uBaseUrl).instance
+export const cInstance = new Instance(cBaseUrl).instance

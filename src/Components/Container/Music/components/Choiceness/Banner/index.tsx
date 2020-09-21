@@ -9,7 +9,6 @@ const Banner: React.FC = () => {
   const [curDot, setCurDot] = useState(0)
   const focus = store.recommend.req_1.data.shelf.v_niche[0].v_card
   const MEDIA_MAX_WIDTH = 1610 // css 媒体查询宽度，超过此宽度显示3张轮播图
-  console.log({ focus })
 
   const scrollRight = () => {
     const bodyWidth = document.body.getBoundingClientRect().width

@@ -2,8 +2,8 @@ import { generateSign } from 'common/utils'
 /**
  * 专辑相关
  */
-import { uInstance } from './instance'
-import { GetAlbumDetail } from './types/Album'
+import { cInstance, uInstance } from './instance'
+import { GetAlbumDetail, GetAlbumlist } from './types/Album'
 
 export const GET_ALBUM_DETAIL = (albumMid: string): Promise<GetAlbumDetail> => {
   const data = {
@@ -38,3 +38,20 @@ export const GET_ALBUM_DETAIL = (albumMid: string): Promise<GetAlbumDetail> => {
   const _ = Date.now()
   return uInstance.post('cgi-bin/musics.fcg', data, { params: { sign, _ } })
 }
+
+export const GET_ALBUM_LIST = (): Promise<GetAlbumlist> =>
+  cInstance.get('v8/fcg-bin/musicmall.fcg', {
+    params: {
+      _: Date.now(),
+      g_tk_new_20200303: 359249670,
+      g_tk: 359249670,
+      uin: 0,
+      format: 'json',
+      inCharset: 'utf-8',
+      outCharset: 'utf-8',
+      notice: 0,
+      platform: 'pc',
+      needNewCode: 1,
+      cmd: 'pc_index_new',
+    },
+  })

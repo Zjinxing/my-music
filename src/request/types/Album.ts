@@ -232,3 +232,57 @@ export interface GetAlbumDetail {
     }
   }
 }
+
+/* 数字专辑页面数据结构 */
+export interface AlbumBanner {
+  actid: number
+  album_id: number
+  album_name: string
+  dis_end: string
+  dis_price: number
+  dis_start: string
+  intro: string
+  jumpurl: string
+  picurl: string
+  price: number
+  type: number
+}
+
+export interface AlbumList {
+  actid: number
+  album_id: string
+  album_mid: string
+  album_name: string
+  buypage: string
+  company_name: string
+  dis_end: string
+  dis_price: number
+  dis_start: string
+  intro: string
+  pre: number
+  price: number
+  publictime: number
+  salecount: number
+  singer_id: string
+  singer_mid: string
+  singer_name: string
+}
+
+export interface AlbumContent {
+  albumlist: AlbumList[]
+  morejump: string
+  type: string
+  title?: string
+}
+
+export interface GetAlbumlist {
+  code: number
+  subcode: number
+  message: string
+  default: number
+  data: {
+    banner: AlbumBanner[]
+    content: AlbumContent[]
+    uin: string
+  }
+}
