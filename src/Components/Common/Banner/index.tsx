@@ -45,12 +45,12 @@ const Banner: React.FC<Props> = props => {
     console.log({ wrapperWidth })
     if (curDot === 0) {
       const finalLeft = wrapperScrollWidth - wrapperWidth
-      ulEl.current?.scrollTo({ left: finalLeft, behavior: 'smooth' })
+      ulEl.current?.scrollTo({ left: finalLeft, behavior: 'auto' })
       setCurDot(dotCount - 1)
     } else {
       ulEl.current?.scrollTo({
         left: ulEl.current.scrollLeft - wrapperWidth - MARGIN_WIDTH,
-        behavior: 'smooth',
+        behavior: 'auto',
       })
       setCurDot(curDot - 1)
     }
@@ -63,12 +63,12 @@ const Banner: React.FC<Props> = props => {
     const MARGIN_WIDTH = bodyWidth >= MEDIA_MAX_WIDTH ? 40 : 20
     const dotCount = Math.ceil(props.imgList.length / visibleImgCount)
     if (curDot === dotCount - 1) {
-      ulEl.current?.scrollTo({ left: 0, behavior: 'smooth' })
+      ulEl.current?.scrollTo({ left: 0, behavior: 'auto' })
       setCurDot(0)
     } else {
       ulEl.current?.scrollTo({
         left: ulEl.current.scrollLeft + wrapperWidth + MARGIN_WIDTH,
-        behavior: 'smooth',
+        behavior: 'auto',
       })
       setCurDot(curDot + 1)
     }
