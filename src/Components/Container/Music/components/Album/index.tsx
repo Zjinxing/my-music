@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Button from 'components/Common/Button'
 import Banner from 'components/Common/Banner'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import { GET_ALBUM_LIST } from 'request/album'
 import { AlbumBanner, AlbumContent } from 'request/types/Album'
 import './index.scss'
@@ -9,6 +9,7 @@ import './index.scss'
 const Albumlist: React.FC = () => {
   const [banner, setBanner] = useState<AlbumBanner[]>([])
   const [albumList, setAlbumList] = useState<AlbumContent[]>([])
+  const history = useHistory()
 
   const albumType: { [key: string]: any } = {
     newupload: '最新上架',
@@ -29,6 +30,9 @@ const Albumlist: React.FC = () => {
 
   const handleBannerClick = (banner: any) => {
     console.log('点击轮播图', banner)
+    const jumpUrl: string = banner.jumpurl
+    const albumMid = jumpUrl.match(/(?<=mid=)\w+(?=&)/)
+    history.push(`/album-detail/${albumMid}`)
   }
 
   return (
