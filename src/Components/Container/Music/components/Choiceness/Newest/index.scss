@@ -146,8 +146,8 @@
       right: -40px;
       transform: translateY(-50%) scale(-1);
       &:hover {
-        right: -41px;
-        filter: drop-shadow(1px 0 color(primary));
+        right: -39px;
+        filter: drop-shadow(-1px 0 color(primary));
       }
     }
     &-list {
