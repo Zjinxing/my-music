@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "antd": "^4.5.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dayjs": "^1.8.34",
     "mobx": "^6.0.1",
     "mobx-react": "^7.0.0",
